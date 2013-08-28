@@ -2,7 +2,7 @@
 
 define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
 
-  var VIEWPORT_PADDING = 100;
+  var VIEWPORT_PADDING = 200;
 
   /**
    * Main game class.
@@ -16,6 +16,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     this.platformsEl = el.find('.platforms');
     this.entitiesEl = el.find('.entities');
     this.worldEl = el.find('.world');
+    this.middleBackground = el.find('.middleBackground');
     this.isPlaying = false;
 
     // Cache a bound onFrame since we need it each frame.
@@ -127,22 +128,28 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
   };
 
   Game.prototype.updateViewport = function() {
-    var minX = this.viewport.x + VIEWPORT_PADDING;
-    var maxX = this.viewport.x + this.viewport.width - VIEWPORT_PADDING;
+    var minY = this.viewport.y + VIEWPORT_PADDING;
+    var maxY = this.viewport.y + this.viewport.width - VIEWPORT_PADDING;
 
-    var playerX = this.player.pos.x;
+    var playerY = this.player.pos.y;
 
     // Update the viewport if needed.
-    if (playerX < minX) {
-      this.viewport.x = playerX - VIEWPORT_PADDING;
-    } else if (playerX > maxX) {
-      this.viewport.x = playerX - this.viewport.width + VIEWPORT_PADDING;
+    if (playerY < minY) {
+      this.viewport.y = playerY - VIEWPORT_PADDING;
+    } else if (playerY > maxY) {
+      this.viewport.y = playerY - this.viewport.width + VIEWPORT_PADDING;
     }
 
     this.worldEl.css({
       left: -this.viewport.x,
       top: -this.viewport.y
     });
+
+    this.middleBackground.css({
+      left: -this.viewport.x/30,
+      top: -this.viewport.y/30
+    })
+
   };
 
   /**

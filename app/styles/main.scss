@@ -5,25 +5,37 @@
 .game {
   left: 50%;
   top: 50%;
-  width: 800px;
+  width: 400px;
   height: 600px;
   margin-left: -400px;
   margin-top: -300px;
   overflow: hidden;
   position: absolute;
+  background: url('../images/background.png');
 }
 
 .world {
   position: absolute;
-  width: 5000px;
-  height: 1000px;
+  width: 500px;
+  height: 5000px;
+
 }
 
-.background {
-  background: url('http://assets.sbnation.com/assets/1608607/Screen_Shot_2012-08-06_at_12.23.43_PM.jpeg');
+.middleBackground{
   position: absolute;
-  height: 479px;
-  width: 3000px;
+  height: 600px;
+  width: 400px;
+  background: url('../images/background2.png');
+}
+.farBackground{
+ 
+
+}
+.background {
+ 
+  position: absolute;
+  height: 3000px;
+  width: 500px;
 }
 
 .enemy {
