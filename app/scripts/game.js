@@ -95,9 +95,11 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     }));
 
     this.addEnemy(new Enemy({
+
+    /*this.addEnemy(new Enemy({
       start: {x: 400, y: 350},
       end: {x: 400, y: 200}
-    }));
+    }));*/
   };
 
   Game.prototype.addPlatform = function(platform) {
@@ -161,6 +163,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
 
   Game.prototype.updateViewport = function() {
     var minY = this.viewport.y + VIEWPORT_PADDING;
+
     var maxY = this.viewport.y + this.viewport.width - VIEWPORT_PADDING;
 
     var playerY = this.player.pos.y;
@@ -168,8 +171,10 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     // Update the viewport if needed.
     if (playerY < minY) {
       this.viewport.y = playerY - VIEWPORT_PADDING;
-    } else if (playerY > maxY) {
-      this.viewport.y = playerY - this.viewport.width + VIEWPORT_PADDING;
+
+    } else if (playerY > maxY + 81) {
+      //this.viewport.y = playerY - this.viewport.width + VIEWPORT_PADDING;
+      this.gameOver();
     }
 
     this.worldEl.css({
@@ -181,6 +186,8 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
       left: -this.viewport.x/30,
       top: -this.viewport.y/30
     })
+
+
 
   };
 
