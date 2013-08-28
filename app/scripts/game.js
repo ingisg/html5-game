@@ -93,9 +93,6 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
       width: 100,
       height: 10
     }));
-
-    this.addEnemy(new Enemy({
-
     /*this.addEnemy(new Enemy({
       start: {x: 400, y: 350},
       end: {x: 400, y: 200}
