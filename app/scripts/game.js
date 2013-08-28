@@ -55,7 +55,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
       height: 10
     }));
     this.addPlatform(new Platform({
-      x: 500,
+      x: 100,
       y: 288,
       width: 100,
       height: 10
@@ -67,8 +67,29 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
       height: 10
     }));
     this.addPlatform(new Platform({
-      x: 750,
+      x: 200,
       y: 188,
+      width: 100,
+      height: 10
+    }));
+
+    this.addPlatform(new Platform({
+      x: 170,
+      y: -300,
+      width: 100,
+      height: 10
+    }));
+
+    this.addPlatform(new Platform({
+      x: 60,
+      y: -200,
+      width: 100,
+      height: 10
+    }));
+
+    this.addPlatform(new Platform({
+      x: 152,
+      y: 1,
       width: 100,
       height: 10
     }));
@@ -102,6 +123,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
   /**
    * Runs every frame. Calculates a delta and allows each game entity to update itself.
    */
+  currentMaxPlatformHeight = -300;
   Game.prototype.onFrame = function() {
     if (!this.isPlaying) {
       return;
@@ -122,7 +144,17 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     }
 
     this.updateViewport();
+    if(this.player.pos.y < currentMaxPlatformHeight+300){
+      newX = Math.random()*300+80;
+    this.addPlatform(new Platform({
+      x: newX,
+      y: currentMaxPlatformHeight-(Math.random()*100+42),
+      width: 100,
+      height: 10
+    }));
+    currentMaxPlatformHeight -= 150;
 
+  }
     // Request next frame.
     requestAnimFrame(this.onFrame);
   };
