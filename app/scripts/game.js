@@ -18,7 +18,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     this.worldEl = el.find('.world');
     this.middleBackground = el.find('.middleBackground');
     this.isPlaying = false;
-
+    this.currentMaxPlatformHeight = -300;
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
   };
@@ -39,6 +39,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
 
 
   Game.prototype.createWorld = function() {
+    this.currentMaxPlatformHeight = -300;
     // Ground
     this.addPlatform(new Platform({
       x: 100,
@@ -111,7 +112,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
 
   Game.prototype.gameOver = function() {
     this.freezeGame();
-    alert('You are game over! Sorry man...');
+   // alert('You are game over! Sorry man...');
 
     var game = this;
     setTimeout(function() {
@@ -122,7 +123,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
   /**
    * Runs every frame. Calculates a delta and allows each game entity to update itself.
    */
-  currentMaxPlatformHeight = -300;
+  
   Game.prototype.onFrame = function() {
     if (!this.isPlaying) {
       return;
@@ -141,17 +142,24 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
         this.entities.splice(i--, 1);
       }
     }
+    console.log( this.viewport.width);
+    if(this.player.pos.x > this.viewport.width){
+      this.player.pos.x = 0;
+    }
+    else if(this.player.pos.x < 0){
+      this.player.pos.x = this.viewport.width;
+    }
 
     this.updateViewport();
-    if(this.player.pos.y < currentMaxPlatformHeight+300){
-      newX = Math.random()*300+80;
+    if(this.player.pos.y < this.currentMaxPlatformHeight+300){
+      newX = (Math.random()*this.viewport.width-120)+80;
     this.addPlatform(new Platform({
       x: newX,
-      y: currentMaxPlatformHeight-(Math.random()*100+42),
+      y: this.currentMaxPlatformHeight-(Math.random()*100+42),
       width: 100,
       height: 10
     }));
-    currentMaxPlatformHeight -= 150;
+    this.currentMaxPlatformHeight -= 150;
 
   }
     // Request next frame.
@@ -169,7 +177,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     if (playerY < minY) {
       this.viewport.y = playerY - VIEWPORT_PADDING;
 
-    } else if (playerY > maxY + 81) {
+    } else if (playerY > maxY+400 + 81) {
       //this.viewport.y = playerY - this.viewport.width + VIEWPORT_PADDING;
       this.gameOver();
     }
@@ -199,7 +207,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     // Set the stage.
     this.createWorld();
     this.player.reset();
-    this.viewport = {x: 100, y: 0, width: 800, height: 600};
+    this.viewport = {x: 0, y: 0, width: 400, height: 600};
 
     // Then start.
     this.unFreezeGame();

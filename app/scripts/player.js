@@ -29,6 +29,8 @@ define(['controls'], function(controls) {
     } else {
       this.vel.x = 0;
     }
+
+
     // Jumping
     if (this.vel.y === 0) {
       this.vel.y = -JUMP_VELOCITY;
