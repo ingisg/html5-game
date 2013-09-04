@@ -12,6 +12,7 @@
   overflow: hidden;
   position: absolute;
   background: url('../images/background.png');
+  
 }
 
 .world {
@@ -28,6 +29,9 @@
   background: url('../images/background2.png');
 }
 .farBackground{
+  position: absolute;
+  background: url('../images/background.png');
+
  
 
 }
@@ -45,6 +49,16 @@
   left: 0;
   top: 0;
   background: url('../images/apple.png') 50% 50% / contain no-repeat;
+}
+
+.gameoverscreen{
+  position: absolute;
+  width: 400px;
+  height: 600px;
+  background: url('../images/gameover.jpg');
+  
+  
+
 }
 
 @import "_player";
