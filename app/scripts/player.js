@@ -9,6 +9,7 @@ define(['controls'], function(controls) {
   var PLAYER_RADIUS = 30;
 
   var HELL_Y = 500;
+  var turnLeft = false;
 
   var Player = function(el, game) {
     this.game = game;
@@ -24,8 +25,10 @@ define(['controls'], function(controls) {
     // Player input
     if (controls.keys.right) {
       this.vel.x = PLAYER_SPEED;
+      turnLeft = false;
     } else if (controls.keys.left) {
       this.vel.x = -PLAYER_SPEED;
+      turnLeft = true;
     } else {
       this.vel.x = 0;
     }
@@ -50,7 +53,13 @@ define(['controls'], function(controls) {
     this.checkGameOver();
 
     // Update UI
-    this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0)');
+    if(turnLeft){
+      this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX(-1)');
+    }
+    else{
+      this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) ');
+    }
+   
 
     this.el.toggleClass('jumping', this.vel.y < 0);
     this.el.toggleClass('walking', this.vel.x !== 0);

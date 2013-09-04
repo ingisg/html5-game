@@ -3,30 +3,50 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 68px;
-  height: 46px;
+  width: 50px;
+  height: 60px;
   margin-left: -34px;
-  margin-top: -46px;
+  margin-top: -69px;
 
   div {margin: 0; padding: 0;}
-  div div {background: url('../images/luke.png'); position: relative;}
+  div div { position: relative;}
 
   .android {
-    height: 402px; width: 278px;
+  
+    height: 570px; width: 120px;
     margin-left: 12px;
 
     @include transform-origin(0, 0);
-    @include transform(scale(0.20, 0.20));
+    @include transform(scale(0.10, 0.10));
+  }
+  .body{
+   background: url('../images/luke.png') no-repeat;
+     height:689px; width: 278px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+     position: absolute;
+  }
+  .hand {
+     background: url('../images/hand.png') no-repeat;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 120px; height: 500px;
+
+    margin-left:200px;
+    margin-top:-40px;
+     position: absolute;
+
+ 
   }
 
-  .head {
-    width: 220px; height: 100px;
-    top: 32px;
 
-    @include border-radius(110px 110px 0 0);
 
-    @include transition(all 0.1s ease-in);
-  }
+
   .l_eye, .r_eye {
     background: #fff;
     width: 20px; height: 20px;
@@ -52,13 +72,7 @@
     @include transform(rotate(30deg));
   }
 
-  .body{
-    width: 220px; height: 184px;
-    top: 40px;
-
-    @include border-radius(0 0 25px 25px);
-  }
-
+ 
   .l_arm, .r_arm, .l_leg, .r_leg {
     width: 50px; position: absolute;
     @include transition(all 0.1s ease);
@@ -107,4 +121,8 @@
   to {
     @include transform(rotate(-30deg));
   }
+}
+.turn-left{
+    @include transform-origin(50%, 25px);
+
 }
