@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
+define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy, Laser) {
 
   var VIEWPORT_PADDING = 200;
 
@@ -19,6 +19,7 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     this.middleBackground = el.find('.middleBackground');
     this.isPlaying = false;
     this.currentMaxPlatformHeight = -300;
+    this.currentId = 0;
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
   };
@@ -94,10 +95,10 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
       width: 100,
       height: 10
     }));
-    /*this.addEnemy(new Enemy({
-      start: {x: 400, y: 350},
-      end: {x: 400, y: 200}
-    }));*/
+    this.addEnemy(new Enemy({
+      start: {x: 100, y: 100},
+      end: {x: 100, y: 100}
+    }));
   };
 
   Game.prototype.addPlatform = function(platform) {
@@ -108,6 +109,11 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
   Game.prototype.addEnemy = function(enemy) {
     this.entities.push(enemy);
     this.entitiesEl.append(enemy.el);
+  };
+
+  Game.prototype.addLaser = function(laser){
+    this.entities.push(laser);
+    this.entitiesEl.append(laser.el);
   };
 
   Game.prototype.gameOver = function() {
@@ -123,7 +129,9 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
   /**
    * Runs every frame. Calculates a delta and allows each game entity to update itself.
    */
-  
+  Game.prototype.onclick = function(){
+    alert("click");
+  }
   Game.prototype.onFrame = function() {
     if (!this.isPlaying) {
       return;
@@ -140,9 +148,18 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
 
       if (e.dead) {
         this.entities.splice(i--, 1);
+        this.el.find("#"+e.id).remove();
+        console.log(e.id);
       }
+      if(e.readyToFire){
+        e.fire();
+       this.addLaser(new Laser({
+            pos: {x: e.pos.x, y: e.pos.y},
+            id:this.currentId++
+          }));
+      }
+      e.onFrame(delta);
     }
-    console.log( this.viewport.width);
     if(this.player.pos.x > this.viewport.width){
       this.player.pos.x = 0;
     }
@@ -224,6 +241,14 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
   Game.prototype.forEachEnemy = function(handler) {
     for (var i = 0, e; e = this.entities[i]; i++) {
       if (e instanceof Enemy) {
+        handler(e);
+      }
+    }
+  };
+
+  Game.prototype.forEachLaser = function(handler) {
+    for (var i = 0, e; e = this.entities[i]; i++) {
+      if (e instanceof Laser) {
         handler(e);
       }
     }

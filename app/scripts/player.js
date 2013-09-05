@@ -3,7 +3,7 @@
 define(['controls'], function(controls) {
 
   var PLAYER_SPEED = 400;
-  var JUMP_VELOCITY = 1500;
+  var JUMP_VELOCITY = 1500  ;
   var GRAVITY = 4000;
   var PLAYER_HALF_WIDTH = 14;
   var PLAYER_RADIUS = 30;
@@ -92,14 +92,14 @@ define(['controls'], function(controls) {
     var centerX = this.pos.x;
     var centerY = this.pos.y - 40;
     var that = this;
-    this.game.forEachEnemy(function(enemy) {
+    this.game.forEachLaser(function(laser) {
       // Distance squared
-      var distanceX = enemy.pos.x - centerX;
-      var distanceY = enemy.pos.y - centerY;
+      var distanceX = laser.pos.x - centerX;
+      var distanceY = laser.pos.y - centerY;
 
       // Minimum distance squared
       var distanceSq = distanceX * distanceX + distanceY * distanceY;
-      var minDistanceSq = (enemy.radius + PLAYER_RADIUS) * (enemy.radius + PLAYER_RADIUS);
+      var minDistanceSq = (laser.radius + PLAYER_RADIUS) * (laser.radius + PLAYER_RADIUS);
 
       // What up?
       if (distanceSq < minDistanceSq) {
