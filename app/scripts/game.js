@@ -14,6 +14,7 @@ define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy
     this.player = new Player(this.el.find('.player'), this);
     this.entities = [];
     this.platformsEl = el.find('.platforms');
+    this.gameoverEl = el.find('.gameoverscreen')
     this.entitiesEl = el.find('.entities');
     this.worldEl = el.find('.world');
     this.middleBackground = el.find('.middleBackground');
@@ -22,6 +23,8 @@ define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy
     this.currentId = 0;
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
+    this.score = 0;
+    
   };
 
   Game.prototype.freezeGame = function() {
@@ -118,7 +121,11 @@ define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy
 
   Game.prototype.gameOver = function() {
     this.freezeGame();
-   // alert('You are game over! Sorry man...');
+   //alert('You are game over! Sorry man...');
+  
+this.gameoverEl.css('display','block');
+alert('You are game over! Sorry man...');
+
 
     var game = this;
     setTimeout(function() {
@@ -193,6 +200,7 @@ define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy
     // Update the viewport if needed.
     if (playerY < minY) {
       this.viewport.y = playerY - VIEWPORT_PADDING;
+
 
     } else if (playerY > maxY+400 + 81) {
       //this.viewport.y = playerY - this.viewport.width + VIEWPORT_PADDING;

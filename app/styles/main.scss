@@ -12,6 +12,7 @@
   overflow: hidden;
   position: absolute;
   background: url('../images/background.png');
+  
 }
 
 .world {
@@ -28,6 +29,9 @@
   background: url('../images/background2.png');
 }
 .farBackground{
+  position: absolute;
+  background: url('../images/background.png');
+
  
 
 }
@@ -47,6 +51,7 @@
   background: url('../images/stormtrooper.png') 50% 50% / contain no-repeat;
 }
 
+<<<<<<< HEAD
 .laser{
    position: absolute;
   height: 15px;
@@ -56,6 +61,17 @@
   background: url('../images/laser.png') 50% 50% / contain no-repeat;
 }
 
+=======
+.gameoverscreen{
+  position: absolute;
+  width: 400px;
+  height: 600px;
+  background: url('../images/gameover.jpg');
+  
+  
+
+}
+>>>>>>> 65ba11c6e14e284446f7ad520323449c25e97c17
 
 @import "_player";
 @import "_platform";
