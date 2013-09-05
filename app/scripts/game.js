@@ -19,6 +19,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     this.scoreEl = el.find('.score');
     this.worldEl = el.find('.world');
     this.middleBackground = el.find('.middleBackground');
+
     this.isPlaying = false;
     this.currentMaxPlatformHeight = -300;
     this.currentId = 0;
@@ -26,6 +27,9 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     this.onFrame = this.onFrame.bind(this);
     this.altitudeScore = 0;
     this.enemyScore = 0;
+    this.gameOverState = false;
+
+    controls.on('touch', this.onTouch.bind(this));
     
   };
 
@@ -108,6 +112,16 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     }));
   };
 
+  Game.prototype.onTouch = function(){
+    if(this.gameOverState){
+       this.gameoverEl.hide();
+       var game = this;
+        setTimeout(function() {
+          game.start();
+        }, 0);
+
+    }
+  }
   Game.prototype.addPlatform = function(platform) {
     this.entities.push(platform);
     this.platformsEl.append(platform.el);
@@ -124,17 +138,12 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
   };
 
   Game.prototype.gameOver = function() {
+    this.gameoverEl.css('display','block');
     this.freezeGame();
-   //alert('You are game over! Sorry man...');
+    this.gameOverState = true;
+
   
-this.gameoverEl.css('display','block');
-//alert('You are game over! Sorry man...');
-
-
-    var game = this;
-    setTimeout(function() {
-      game.start();
-    }, 0);
+    
   };
 
   /**
@@ -169,7 +178,9 @@ this.gameoverEl.css('display','block');
       }
       e.onFrame(delta);
     }
+
     if(this.player.pos.x > this.viewport.width){
+
       this.player.pos.x = 0;
     }
     else if(this.player.pos.x < 0){
@@ -194,6 +205,7 @@ this.gameoverEl.css('display','block');
 
   Game.prototype.updateViewport = function() {
     var minY = this.viewport.y + VIEWPORT_PADDING;
+
     if(minY < 0)
     {
       this.altitudeScore = Math.round(minY * (-1));
@@ -242,7 +254,7 @@ this.gameoverEl.css('display','block');
     // Set the stage.
     this.createWorld();
     this.player.reset();
-    this.viewport = {x: 0, y: 0, width: 400, height: 600};
+    this.viewport = {x: 0, y: 0, width: 800, height: 1200};
 
     // Then start.
     this.unFreezeGame();
@@ -271,6 +283,7 @@ this.gameoverEl.css('display','block');
       }
     }
   };
+
 
   /**
    * Cross browser RequestAnimationFrame

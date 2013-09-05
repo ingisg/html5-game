@@ -49,7 +49,7 @@ define(['eventemitter2'], function(EventEmitter2) {
   };
 
   Controls.prototype.onTouch = function(e) {
-    this.emit('jump');
+    this.emit('touch');
   };
 
   Controls.prototype.onKeyDown = function(e) {
@@ -58,7 +58,7 @@ define(['eventemitter2'], function(EventEmitter2) {
       this.keys[keyName] = true;
 
       if (keyName === 'space') {
-        this.emit('jump');
+        this.emit('touch');
       }
       return false;
     }

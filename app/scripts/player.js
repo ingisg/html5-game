@@ -3,8 +3,8 @@
 define(['controls'], function(controls) {
 
   var PLAYER_SPEED = 400;
-  var JUMP_VELOCITY = 1500  ;
-  var GRAVITY = 4000;
+  var JUMP_VELOCITY = 1200  ;
+  var GRAVITY = 2000;
   var PLAYER_HALF_WIDTH = 14;
   var PLAYER_RADIUS = 30;
 
@@ -53,9 +53,8 @@ if (this.vel.y === 0) {
    
 
     // Collision detection
-    if(this.checkPlatforms(oldY)){
-      this.vel.y = -JUMP_VELOCITY;
-    }
+    this.checkPlatforms(oldY);
+    
     this.checkEnemies();
     this.checkGameOver();
 
