@@ -16,13 +16,15 @@ define(['player', 'platform', 'enemy'], function(Player, Platform, Enemy) {
     this.platformsEl = el.find('.platforms');
     this.gameoverEl = el.find('.gameoverscreen')
     this.entitiesEl = el.find('.entities');
+    this.scoreEl = el.find('.score');
     this.worldEl = el.find('.world');
     this.middleBackground = el.find('.middleBackground');
     this.isPlaying = false;
     this.currentMaxPlatformHeight = -300;
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
-    this.score = 0;
+    this.altitudeScore = 0;
+    this.enemyScore = 0;
     
   };
 
@@ -175,10 +177,19 @@ alert('You are game over! Sorry man...');
 
   Game.prototype.updateViewport = function() {
     var minY = this.viewport.y + VIEWPORT_PADDING;
+    if(minY < 0)
+    {
+      this.altitudeScore = Math.round(minY * (-1));
+      var text = document.createTextNode('Score: '+this.altitudeScore);
 
+      this.scoreEl.innerHTML = text;
+      
+    }
+    console.log(this.altitudeScore);
     var maxY = this.viewport.y + this.viewport.width - VIEWPORT_PADDING;
 
     var playerY = this.player.pos.y;
+
 
     // Update the viewport if needed.
     if (playerY < minY) {
