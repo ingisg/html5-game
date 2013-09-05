@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy, Laser) {
+define(['controls','player', 'platform', 'enemy','laser'], function(controls, Player, Platform, Enemy, Laser) {
 
   var VIEWPORT_PADDING = 200;
 
@@ -45,8 +45,8 @@ define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy
 
 
   Game.prototype.createWorld = function() {
-     this.middleBackground.css('transform', 'translate3d(0px, 0,0)');
- this.worldEl.css('transform', 'translate3d(0px, 0,0)');
+  this.worldEl.css('transform', 'translate3d(0,0,0)');
+  this.middleBackground.css('transform', 'translate3d(0,0,0)');
     this.currentMaxPlatformHeight = -300;
     // Ground
     this.addPlatform(new Platform({
@@ -128,7 +128,7 @@ define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy
    //alert('You are game over! Sorry man...');
   
 this.gameoverEl.css('display','block');
-alert('You are game over! Sorry man...');
+//alert('You are game over! Sorry man...');
 
 
     var game = this;
@@ -149,6 +149,7 @@ alert('You are game over! Sorry man...');
     var now = +new Date() / 1000,
         delta = now - this.lastFrame;
     this.lastFrame = now;
+ controls.onFrame(delta);
 
     this.player.onFrame(delta);
 
@@ -215,7 +216,7 @@ alert('You are game over! Sorry man...');
       //this.viewport.y = playerY - this.viewport.width + VIEWPORT_PADDING;
       this.gameOver();
     }
-
+  
     this.worldEl.css({
       left: -this.viewport.x,
       top: -this.viewport.y

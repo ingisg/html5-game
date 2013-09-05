@@ -9,7 +9,7 @@ define(['controls'], function(controls) {
   var PLAYER_RADIUS = 30;
 
   var HELL_Y = 500;
-  var turnLeft = false;
+
 
   var Player = function(el, game) {
     this.game = game;
@@ -22,43 +22,44 @@ define(['controls'], function(controls) {
   }
 
   Player.prototype.onFrame = function(delta) {
-    // Player input
-    if (controls.keys.right) {
-      this.vel.x = PLAYER_SPEED;
-      turnLeft = false;
-    } else if (controls.keys.left) {
-      this.vel.x = -PLAYER_SPEED;
-      turnLeft = true;
-    } else {
-      this.vel.x = 0;
-    }
+     // Player input
+    this.vel.x = controls.inputVec.x * PLAYER_SPEED;
 
-
-    // Jumping
-    if (this.vel.y === 0) {
+if (this.vel.y === 0) {
       this.vel.y = -JUMP_VELOCITY;
     }
 
-
     // Gravity
+
     this.vel.y += GRAVITY * delta;
 
     var oldY = this.pos.y;
     this.pos.x += delta * this.vel.x;
     this.pos.y += delta * this.vel.y;
 
-    // Collision detection
-    this.checkPlatforms(oldY);
-    this.checkEnemies();
-    this.checkGameOver();
 
-    // Update UI
-    if(turnLeft){
+    if(controls.inputVec.x <  0){
       this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX(-1)');
     }
     else{
       this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) ');
     }
+
+
+    // Jumping
+    
+    
+
+   
+
+    // Collision detection
+    if(this.checkPlatforms(oldY)){
+      this.vel.y = -JUMP_VELOCITY;
+    }
+    this.checkEnemies();
+    this.checkGameOver();
+
+  
    
 
     this.el.toggleClass('jumping', this.vel.y < 0);
@@ -83,6 +84,7 @@ define(['controls'], function(controls) {
           // COLLISION. Let's stop gravity.
           that.pos.y = p.rect.y;
           that.vel.y = 0;
+          return true;
         }
       }
     });
