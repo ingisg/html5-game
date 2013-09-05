@@ -45,6 +45,8 @@ define(['player', 'platform', 'enemy','laser'], function(Player, Platform, Enemy
 
 
   Game.prototype.createWorld = function() {
+     this.middleBackground.css('transform', 'translate3d(0px, 0,0)');
+ this.worldEl.css('transform', 'translate3d(0px, 0,0)');
     this.currentMaxPlatformHeight = -300;
     // Ground
     this.addPlatform(new Platform({
@@ -138,9 +140,7 @@ alert('You are game over! Sorry man...');
   /**
    * Runs every frame. Calculates a delta and allows each game entity to update itself.
    */
-  Game.prototype.onclick = function(){
-    alert("click");
-  }
+
   Game.prototype.onFrame = function() {
     if (!this.isPlaying) {
       return;
@@ -158,7 +158,6 @@ alert('You are game over! Sorry man...');
       if (e.dead) {
         this.entities.splice(i--, 1);
         this.el.find("#"+e.id).remove();
-        console.log(e.id);
       }
       if(e.readyToFire){
         e.fire();
@@ -202,7 +201,6 @@ alert('You are game over! Sorry man...');
       this.scoreEl.innerHTML = text;
       
     }
-    console.log(this.altitudeScore);
     var maxY = this.viewport.y + this.viewport.width - VIEWPORT_PADDING;
 
     var playerY = this.player.pos.y;
@@ -222,7 +220,7 @@ alert('You are game over! Sorry man...');
       left: -this.viewport.x,
       top: -this.viewport.y
     });
-
+    
     this.middleBackground.css({
       left: -this.viewport.x/30,
       top: -this.viewport.y/30
