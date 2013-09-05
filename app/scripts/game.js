@@ -114,6 +114,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
 
   Game.prototype.onTouch = function(){
     if(this.gameOverState){
+
        this.gameoverEl.hide();
        var game = this;
         setTimeout(function() {
