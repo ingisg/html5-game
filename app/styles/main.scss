@@ -68,6 +68,8 @@ background: black;
 
 
 .gameoverscreen{
+ font-size:40pt;
+  color:white;
   position: absolute;
    width: 750px;
   height: 1100px;
@@ -79,6 +81,11 @@ background: black;
 }
 
 .score{
+  font-size:40pt;
+  color:white;
+  width:100px;
+  height:50px;
+  margin-top:100px;
   position: absolute;
   float:left;
 

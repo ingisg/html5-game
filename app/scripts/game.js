@@ -26,6 +26,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     // Cache a bound onFrame since we need it each frame.
     this.onFrame = this.onFrame.bind(this);
     this.altitudeScore = 0;
+    this.oldScore = -1;
     this.enemyScore = 0;
     this.gameOverState = false;
 
@@ -114,8 +115,9 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
 
   Game.prototype.onTouch = function(){
     if(this.gameOverState){
-
+      console.log("restart");
        this.gameoverEl.hide();
+       this.gameOverState = false;
        var game = this;
         setTimeout(function() {
           game.start();
@@ -123,6 +125,8 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
 
     }
   }
+
+
   Game.prototype.addPlatform = function(platform) {
     this.entities.push(platform);
     this.platformsEl.append(platform.el);
@@ -189,7 +193,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     }
 
     this.updateViewport();
-    if(this.player.pos.y < this.currentMaxPlatformHeight+300){
+    if(this.player.pos.y < this.currentMaxPlatformHeight+200){
       newX = (Math.random()*this.viewport.width-120)+80;
     this.addPlatform(new Platform({
       x: newX,
@@ -197,7 +201,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       width: 100,
       height: 10
     }));
-    this.currentMaxPlatformHeight -= 150;
+    this.currentMaxPlatformHeight -= 100;
 
   }
     // Request next frame.
@@ -206,13 +210,16 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
 
   Game.prototype.updateViewport = function() {
     var minY = this.viewport.y + VIEWPORT_PADDING;
-
-    if(minY < 0)
+    this.altitudeScore = Math.round(minY * (-1));
+    if(minY < 0 && this.altitudeScore > this.oldScore+99)
     {
-      this.altitudeScore = Math.round(minY * (-1));
-      var text = document.createTextNode('Score: '+this.altitudeScore);
 
-      this.scoreEl.innerHTML = text;
+      this.oldScore = this.altitudeScore;
+      var text = document.createTextNode('Score: '+this.altitudeScore);
+      
+
+      document.getElementById("score").innerHTML="Score "+this.altitudeScore;
+
       
     }
     var maxY = this.viewport.y + this.viewport.width - VIEWPORT_PADDING;
@@ -225,7 +232,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       this.viewport.y = playerY - VIEWPORT_PADDING;
 
 
-    } else if (playerY > maxY+400 + 81) {
+    } else if (playerY > maxY+450 + 81) {
       //this.viewport.y = playerY - this.viewport.width + VIEWPORT_PADDING;
       this.gameOver();
     }
