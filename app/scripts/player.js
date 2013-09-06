@@ -6,26 +6,35 @@ define(['controls'], function(controls) {
   var JUMP_VELOCITY = 1200  ;
   var GRAVITY = 2000;
   var PLAYER_HALF_WIDTH = 14;
-  var PLAYER_RADIUS = 30;
+  var PLAYER_RADIUS = 20;
 
   var HELL_Y = 500;
+
 
 
   var Player = function(el, game) {
     this.game = game;
     this.el = el;
+    this.hand = el.find(".hand");
+    console.log(this.hand);
+    this.swinging = false;
+    this.swingTimer = 0.2;
   };
 
   Player.prototype.reset = function() {
     this.pos = { x: 200, y: 400 };
     this.vel = { x: 0, y: 0 };
   }
-
+  Player.prototype.swing = function(){
+    console.log("SWIING!");
+    this.hand.toggleClass("swing",false);
+    this.swinging = true;
+  }
   Player.prototype.onFrame = function(delta) {
      // Player input
     this.vel.x = controls.inputVec.x * PLAYER_SPEED;
 
-if (this.vel.y === 0) {
+  if (this.vel.y === 0) {
       this.vel.y = -JUMP_VELOCITY;
     }
 
@@ -44,6 +53,10 @@ if (this.vel.y === 0) {
     else{
       this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) ');
     }
+    if(this.swinging){
+      console.log("!!");
+    }
+    this.hand.toggleClass("swing",this.swinging);
 
 
     // Jumping
@@ -76,6 +89,7 @@ if (this.vel.y === 0) {
 
     this.game.forEachPlatform(function(p) {
       // Are we crossing Y.
+     
       if (p.rect.y >= oldY && p.rect.y < that.pos.y) {
 
         // Are inside X bounds.
@@ -83,7 +97,7 @@ if (this.vel.y === 0) {
           // COLLISION. Let's stop gravity.
           that.pos.y = p.rect.y;
           that.vel.y = 0;
-          return true;
+
         }
       }
     });
@@ -91,8 +105,25 @@ if (this.vel.y === 0) {
 
   Player.prototype.checkEnemies = function() {
     var centerX = this.pos.x;
-    var centerY = this.pos.y - 40;
+    var centerY = this.pos.y;
     var that = this;
+    this.game.forEachEnemy(function(enemy){
+      var distanceX = enemy.pos.x - centerX;
+      var distanceY = enemy.pos.y - centerY;
+
+      // Minimum distance squared
+      var distanceSq = distanceX * distanceX + distanceY * distanceY;
+      var minDistanceSq = (enemy.radius + PLAYER_RADIUS) * (enemy.radius + PLAYER_RADIUS);
+        if (distanceSq < minDistanceSq) {
+          if(!enemy.dying){
+            console.log("kill!");
+            console.log(that.hand);
+            
+            that.swing();
+            enemy.dying = true;
+          }
+        }
+    });
     this.game.forEachLaser(function(laser) {
       // Distance squared
       var distanceX = laser.pos.x - centerX;

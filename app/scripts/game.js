@@ -58,7 +58,8 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       x: 100,
       y: 418,
       width: 800,
-      height: 10
+      height: 10,
+      id: this.currentId++
     }));
 
     // Floating platforms
@@ -66,51 +67,55 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       x: 300,
       y: 258,
       width: 100,
-      height: 10
+      height: 10,
+      id: this.currentId++
     }));
     this.addPlatform(new Platform({
       x: 100,
       y: 288,
       width: 100,
-      height: 10
+      height: 10,
+      id: this.currentId++
     }));
     this.addPlatform(new Platform({
       x: 400,
       y: 158,
       width: 100,
-      height: 10
+      height: 10,
+      id: this.currentId++
     }));
     this.addPlatform(new Platform({
       x: 200,
       y: 188,
       width: 100,
-      height: 10
+      height: 10,
+      id: this.currentId++
     }));
 
     this.addPlatform(new Platform({
       x: 170,
       y: -300,
       width: 100,
-      height: 10
+      height: 10,
+      id: this.currentId++
     }));
 
     this.addPlatform(new Platform({
       x: 60,
       y: -200,
       width: 100,
-      height: 10
+      height: 10,
+      id: this.currentId++
     }));
 
     this.addPlatform(new Platform({
       x: 152,
       y: 1,
       width: 100,
-      height: 10
+      height: 10,
+      id: this.currentId++
     }));
-    this.addEnemy(new Enemy({
-      start: {x: 100, y: 100},
-      end: {x: 100, y: 100}
-    }));
+   
   };
 
   Game.prototype.onTouch = function(){
@@ -143,6 +148,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
   };
 
   Game.prototype.gameOver = function() {
+    console.log("over");
     this.gameoverEl.css('display','block');
     this.freezeGame();
     this.gameOverState = true;
@@ -170,14 +176,20 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     for (var i = 0, e; e = this.entities[i]; i++) {
       e.onFrame(delta);
 
+     if(e.pos.y > this.player.pos.y+1000){
+        e.dead = true;
+        
+      }
       if (e.dead) {
+
         this.entities.splice(i--, 1);
+        console.log(this.el.find("#"+e.id));
         this.el.find("#"+e.id).remove();
       }
       if(e.readyToFire){
         e.fire();
        this.addLaser(new Laser({
-            pos: {x: e.pos.x, y: e.pos.y},
+            pos: {x: e.pos.x, y: e.pos.y+27},
             id:this.currentId++
           }));
       }
@@ -194,13 +206,22 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
 
     this.updateViewport();
     if(this.player.pos.y < this.currentMaxPlatformHeight+200){
-      newX = (Math.random()*this.viewport.width-120)+80;
+      newX = (Math.random()*this.viewport.width+100)-150;
+      newY = this.currentMaxPlatformHeight-(Math.random()*100+42),
     this.addPlatform(new Platform({
       x: newX,
-      y: this.currentMaxPlatformHeight-(Math.random()*100+42),
+      y: newY,
       width: 100,
-      height: 10
+      height: 10,
+      id:this.currentId++
     }));
+    if(Math.random() > 0.9){
+     this.addEnemy(new Enemy({
+      x: newX,
+      y: newY-70,
+      id:this.currentId++
+    }));
+   }
     this.currentMaxPlatformHeight -= 100;
 
   }

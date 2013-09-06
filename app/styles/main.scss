@@ -54,6 +54,12 @@ background: black;
   background: url('../images/stormtrooper.png') 50% 50% / contain no-repeat;
 }
 
+.dying{
+  transform:rotate(30deg);
+-ms-transform:rotate(30deg); /* IE 9 */
+-webkit-transform:rotate(30deg); /* Safari and Chrome */
+   @include transform(rotate(-30deg));
+}
 
 .laser{
    position: absolute;
@@ -62,8 +68,7 @@ background: black;
   left: 0;
   top: 0;
   background: url('../images/laser.png') 50% 50% / contain no-repeat;
-  margin-top:127px;
-  margin-left:-20px;
+
 }
 
 

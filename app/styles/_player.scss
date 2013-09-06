@@ -11,7 +11,7 @@
   div {margin: 0; padding: 0;}
   div div { position: relative;}
 
-  .android {
+  .luke {
   
     height: 570px; width: 120px;
     margin-left: 12px;
@@ -29,22 +29,25 @@
      position: absolute;
   }
   .hand {
-     background: url('../images/hand.png') no-repeat;
 
+     background: url('../images/hand.png') no-repeat;
+   @include transform-origin(-100%, 100%);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     width: 120px; height: 500px;
-
-    margin-left:200px;
-    margin-top:-40px;
+    left:200px;
+    margin-left:40px;
+    margin-top:-80px;
      position: absolute;
 
- 
+  
   }
 
-
+.swing{
+  @include animation(swing 0.15s 0.15s linear alternate);
+}
 
 
   .l_eye, .r_eye {
@@ -100,8 +103,8 @@
     @include animation(player-walk-left 0.15s linear infinite alternate);
   }
 
-  &.walking .r_leg {
-    @include animation(player-walk-right 0.15s 0.15s linear infinite alternate);
+  &.hand {
+    @include animation(swing 1.3s 1.3s linear infinite alternate);
   }
 }
 
@@ -114,15 +117,12 @@
   }
 }
 
-@include keyframes(player-walk-right) {
+@include keyframes(swing) {
   from {
     @include transform(rotate(0));
   }
   to {
-    @include transform(rotate(-30deg));
+    @include transform(rotate(120deg));
   }
 }
-.turn-left{
-    @include transform-origin(50%, 25px);
 
-}
