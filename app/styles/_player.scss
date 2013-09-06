@@ -46,7 +46,7 @@
   }
 
 .swing{
-  @include animation(swing 0.15s 0.15s linear alternate);
+  @include animation(swing  0.15s linear alternate);
 }
 
 
@@ -122,7 +122,7 @@
     @include transform(rotate(0));
   }
   to {
-    @include transform(rotate(120deg));
+    @include transform(rotate(60deg));
   }
 }
 

@@ -120,6 +120,13 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       height: 10,
       id: this.currentId++
     }));
+
+    this.addEnemy(new Enemy({
+      x: 500,
+      y: 345,
+      direction: 1, 
+      id:this.currentId++
+    }));
    
   };
 
@@ -195,8 +202,11 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       if(e.readyToFire){
         e.fire();
        this.addLaser(new Laser({
-            pos: {x: e.pos.x, y: e.pos.y+27},
+            pos: {x: e.pos.x+e.direction*-1*24, y: e.pos.y+27},
+            speed:90,
+            direction:e.direction*-1,
             id:this.currentId++
+
           }));
       }
       e.onFrame(delta);
@@ -222,9 +232,14 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       id:this.currentId++
     }));
     if(Math.random() > 0.9){
+     direction = 1;
+     if(newX < 400){
+      direction = -1;
+     }
      this.addEnemy(new Enemy({
       x: newX,
       y: newY-70,
+      direction: direction, 
       id:this.currentId++
     }));
    }

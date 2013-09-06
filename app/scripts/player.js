@@ -6,7 +6,7 @@ define(['controls'], function(controls) {
   var JUMP_VELOCITY = 1200  ;
   var GRAVITY = 2000;
   var PLAYER_HALF_WIDTH = 14;
-  var PLAYER_RADIUS = 20;
+  var PLAYER_RADIUS = 40;
 
   var HELL_Y = 500;
 
@@ -19,6 +19,7 @@ define(['controls'], function(controls) {
     console.log(this.hand);
     this.swinging = false;
     this.swingTimer = 0.2;
+    this.direction = 1;
   };
 
   Player.prototype.reset = function() {
@@ -48,17 +49,16 @@ define(['controls'], function(controls) {
 
 
     if(controls.inputVec.x <  0){
-      this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX(-1)');
+      this.direction = -1;
+    
     }
-    else{
-      this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) ');
+    else if(controls.inputVec.x > 0){
+     this.direction = 1;
     }
-    if(this.swinging){
-      console.log("!!");
-    }
+
     this.hand.toggleClass("swing",this.swinging);
 
-
+    this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX('+this.direction+')');
     // Jumping
     
     
@@ -135,7 +135,24 @@ define(['controls'], function(controls) {
 
       // What up?
       if (distanceSq < minDistanceSq) {
-        that.game.gameOver();
+          console.log(that.direction + laser.direction);
+        if((that.direction + laser.direction) !== 0){
+          if(laser.deadly){
+            that.game.gameOver();
+          }
+         
+          
+
+        }
+        else{
+          if(laser.deadly){
+            
+            if(laser.deadly){
+             laser.deflect();
+             that.swing();
+           }
+          }
+        }
       }
     });
   };

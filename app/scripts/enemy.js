@@ -17,7 +17,9 @@ define(function() {
     this.readyToFire = true;
     this.dying = false;
     this.id = options.id;
-     this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0)');
+    this.direction = options.direction;
+    console.log(options.direction);
+      this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX('+this.direction+')');
 
   };
 
@@ -33,7 +35,7 @@ define(function() {
     }
     if(this.dying){
       this.pos.y+=150*delta;
-this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0)');
+  this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0)');
 
     }
     if(this.dead){
