@@ -15,10 +15,12 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     this.entities = [];
     this.platformsEl = el.find('.platforms');
     this.gameoverEl = el.find('.gameoverscreen')
+    this.closeBackgroundEl = el.find('.closeBackground');
     this.entitiesEl = el.find('.entities');
     this.scoreEl = el.find('.score');
     this.worldEl = el.find('.world');
     this.middleBackground = el.find('.middleBackground');
+    this.closeBackgroundX = -1500;
 
     this.isPlaying = false;
     this.currentMaxPlatformHeight = -300;
@@ -52,6 +54,9 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
   Game.prototype.createWorld = function() {
   this.worldEl.css('transform', 'translate3d(0,0,0)');
   this.middleBackground.css('transform', 'translate3d(0,0,0)');
+  this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
+ this.closeBackgroundX = -1500;
+  console.log(this.closeBackgroundEl);
     this.currentMaxPlatformHeight = -300;
     // Ground
     this.addPlatform(new Platform({
@@ -131,7 +136,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     }
   }
 
-
+  
   Game.prototype.addPlatform = function(platform) {
     this.entities.push(platform);
     this.platformsEl.append(platform.el);
@@ -162,6 +167,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
    */
 
   Game.prototype.onFrame = function() {
+    
     if (!this.isPlaying) {
       return;
     }
@@ -225,6 +231,20 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     this.currentMaxPlatformHeight -= 100;
 
   }
+     this.worldEl.css({
+      left: -this.viewport.x,
+      top: -this.viewport.y
+    });
+    
+    this.middleBackground.css({
+      left: -this.viewport.x/30,
+      top: -this.viewport.y/50
+
+    })
+ this.closeBackgroundEl.css({
+      left: this.closeBackgroundX+= 20*delta,
+      top: -this.viewport.y/20
+    })
     // Request next frame.
     requestAnimFrame(this.onFrame);
   };
@@ -258,17 +278,8 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       this.gameOver();
     }
   
-    this.worldEl.css({
-      left: -this.viewport.x,
-      top: -this.viewport.y
-    });
-    
-    this.middleBackground.css({
-      left: -this.viewport.x/30,
-      top: -this.viewport.y/30
-    })
 
-
+  
 
   };
 

@@ -25,6 +25,14 @@ background: black;
 
 }
 
+.closeBackground{
+   position: absolute;
+   width: 3000px;
+  height: 1200px;
+  left: 0;
+  top: 0;
+  background: url('../images/star-destroyer.png') no-repeat;
+}
 .middleBackground{
   position: absolute;
    width: 800px;
