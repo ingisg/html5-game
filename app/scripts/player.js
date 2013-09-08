@@ -116,8 +116,7 @@ define(['controls'], function(controls) {
       var minDistanceSq = (enemy.radius + PLAYER_RADIUS) * (enemy.radius + PLAYER_RADIUS);
         if (distanceSq < minDistanceSq) {
           if(!enemy.dying){
-            console.log("kill!");
-            console.log(that.hand);
+           
             
             that.swing();
             enemy.dying = true;
@@ -151,10 +150,10 @@ define(['controls'], function(controls) {
         else{
           if(laser.deadly){
             
-            if(laser.deadly){
+           
              laser.deflect();
              that.swing();
-           }
+           
           }
         }
       }

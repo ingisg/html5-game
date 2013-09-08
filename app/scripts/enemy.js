@@ -2,10 +2,11 @@
 
 define(function() {
   var FIRERATE = 1;
-  var FloatingEnemy = function(options) {
+  var FloatingEnemy = function(options, game) {
     this.el = $('<div class="enemy" id="'+options.id+'"></div>');
 
     this.pos = {};
+    this.game = game;
     this.pos.x = options.x;
     this.pos.y = options.y;
     this.radius = 32;
@@ -30,6 +31,7 @@ define(function() {
     this.readyToFire = false;
   }
   FloatingEnemy.prototype.onFrame = function(delta) {
+    this.laserCheck();
     this.fireTimer += delta;
     if(this.fireTimer > 3){
       this.fireTimer = 0;
@@ -41,6 +43,7 @@ define(function() {
   this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0)');
 
     }
+
     if(this.dead){
   //    this.el.remove();
     }
@@ -56,6 +59,28 @@ define(function() {
     // Update UI
    
   };
+  FloatingEnemy.prototype.laserCheck = function() {
+    var centerX = this.pos.x;
+    var centerY = this.pos.y;
+    var that = this;
+
+    this.game.forEachLaser(function(laser) {
+    var distanceX = laser.pos.x - centerX;
+    var distanceY = laser.pos.y - centerY;
+
+      // Minimum distance squared
+    var distanceSq = distanceX * distanceX + distanceY * distanceY;
+    var minDistanceSq = (laser.radius + that.radius) * (laser.radius + that.radius);
+
+    if(!laser.deadly){
+       if (distanceSq < minDistanceSq) {
+          that.dying = true;
+
+      }
+     
+  }
+});
+}
 
   return FloatingEnemy;
 });

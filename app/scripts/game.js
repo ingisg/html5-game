@@ -20,7 +20,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.platformsEl = el.find('.platforms');
     this.gameoverEl = el.find('.gameoverscreen')
     this.gameContentEl = el.find('.gameContent');
-     this.gameContentEl.css('transform', 'translate3d(500,0,0)');
+    this.gameContentEl.css('transform', 'translate3d(500,0,0)');
     this.closeBackgroundEl = el.find('.closeBackground');
     this.entitiesEl = el.find('.entities');
     this.scoreEl = el.find('.score');
@@ -287,7 +287,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
       y: newY-70,
       direction: direction, 
       id:this.currentId++
-    }));
+    },this));
    }
     
     this.currentMaxPlatformHeight -= 100;
