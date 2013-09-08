@@ -1,6 +1,6 @@
 /*global define */
 
-define(function() {
+define(['controls'],function(controls) {
   
   var Intro = function(el,gameContainer) {
     this.el = el;
@@ -10,6 +10,7 @@ define(function() {
     this.destroyerTopEl = this.el.find(".starDestroyerTop");
     this.starsEl = this.el.find(".stars");
     this.alderaanEl = this.el.find(".alderaan");
+    this.exit = this.el.find(".exit");
 
     this.pos = {};
     this.pos.x = 1;
@@ -31,10 +32,24 @@ define(function() {
      this.destroyerTopEl.css('transform', 'translate3d(0,0,0) ');
      this.starsEl.css('transform', 'translate3d(0,0,0) ');
      this.alderaanEl.css('transform translate3d(0,0,0)');
+
+       controls.on('touch', this.onTouch.bind(this));
   // 
   };
 
+Intro.prototype.onTouch = function(){
 
+  this.done = true;
+  this.destroyerTopEl.css({
+      left: 1000
+    });
+  this.title.css({
+      left: 1000
+    });
+  this.destroyer.css({
+      left: 1000
+    });
+}
   Intro.prototype.onFrame = function(delta) {
     this.pos.y -=20*delta;
     this.pos.x = 0;

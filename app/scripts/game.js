@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['controls','player', 'platform', 'enemy','laser','intro','Howler'], function(controls, Player, Platform, Enemy, Laser, Intro,howler) {
+define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hammer'], function(controls, Player, Platform, Enemy, Laser, Intro,howler,hammer) {
 
   var VIEWPORT_PADDING = 200;
 
@@ -60,7 +60,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler'], func
    
     
   };
-
+  
   Game.prototype.freezeGame = function() {
     this.isPlaying = false;
   };
@@ -154,6 +154,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler'], func
   };
 
   Game.prototype.onTouch = function(){
+
     if(this.gameOverState){
       console.log("restart");
        this.gameoverEl.hide();

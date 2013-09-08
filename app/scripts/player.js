@@ -134,7 +134,11 @@ define(['controls'], function(controls) {
       var minDistanceSq = (laser.radius + PLAYER_RADIUS) * (laser.radius + PLAYER_RADIUS);
 
       // What up?
-      if (distanceSq < minDistanceSq) {
+      if(!laser.deadly){
+
+      }
+      else{
+        if (distanceSq < minDistanceSq) {
           console.log(that.direction + laser.direction);
         if((that.direction + laser.direction) !== 0){
           if(laser.deadly){
@@ -154,6 +158,8 @@ define(['controls'], function(controls) {
           }
         }
       }
+      }
+      
     });
   };
 

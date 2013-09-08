@@ -3,7 +3,8 @@ require.config({
         jquery: '../bower_components/jquery/jquery',
         bootstrap: 'vendor/bootstrap',
         eventemitter2: '../bower_components/eventemitter2/lib/eventemitter2',
-        Howler: '../bower_components/howler/howler'
+        Howler: '../bower_components/howler/howler',
+        Hammer: '../bower_components/Hammerjs/dist/Hammer'
     },
     shim: {
         bootstrap: {
