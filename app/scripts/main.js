@@ -4,7 +4,7 @@ require.config({
         bootstrap: 'vendor/bootstrap',
         eventemitter2: '../bower_components/eventemitter2/lib/eventemitter2',
         Howler: '../bower_components/howler/howler',
-        Hammer: '../bower_components/Hammerjs/dist/Hammer'
+        Hammer: '../bower_components/Hammerjs/dist/hammer'
     },
     shim: {
         bootstrap: {

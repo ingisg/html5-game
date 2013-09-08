@@ -263,8 +263,8 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     }
 
     this.updateViewport();
-    if(this.player.pos.y < this.currentMaxPlatformHeight+200){
-      newX = (Math.random()*this.viewport.width+100)-150;
+    if(this.player.pos.y < this.currentMaxPlatformHeight+400){
+      newX = (Math.random()*(this.viewport.width)+50)-150;
       newY = this.currentMaxPlatformHeight-(Math.random()*100+42);
       this.platformRandom = Math.random();
 
