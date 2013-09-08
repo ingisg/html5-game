@@ -23,6 +23,9 @@ define(function() {
 
   };
 
+  FloatingEnemy.prototype.kill = function(){
+    this.el.remove();
+  }
   FloatingEnemy.prototype.fire = function(){
     this.readyToFire = false;
   }

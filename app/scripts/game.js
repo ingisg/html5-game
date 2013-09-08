@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['controls','player', 'platform', 'enemy','laser'], function(controls, Player, Platform, Enemy, Laser) {
+define(['controls','player', 'platform', 'enemy','laser','intro','Howler'], function(controls, Player, Platform, Enemy, Laser, Intro,howler) {
 
   var VIEWPORT_PADDING = 200;
 
@@ -11,10 +11,16 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
    */
   var Game = function(el) {
     this.el = el;
+   
     this.player = new Player(this.el.find('.player'), this);
+
+    this.intro = new Intro(this.el.find('.intro'),this.el.find('.gameContent'));
+
     this.entities = [];
     this.platformsEl = el.find('.platforms');
     this.gameoverEl = el.find('.gameoverscreen')
+    this.gameContentEl = el.find('.gameContent');
+     this.gameContentEl.css('transform', 'translate3d(500,0,0)');
     this.closeBackgroundEl = el.find('.closeBackground');
     this.entitiesEl = el.find('.entities');
     this.scoreEl = el.find('.score');
@@ -33,6 +39,25 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     this.gameOverState = false;
 
     controls.on('touch', this.onTouch.bind(this));
+
+    this.introActive = true;
+    this.isPlaying = false;
+
+    this.ready = false;
+
+    var that = this;
+    this.sound = new howler.Howl({
+      urls: ['/sounds/intro.mp3', '/sounds/intro.ogg'],
+      onload:function(){
+        console.log("test");
+         this.ready = true;
+         that.sound.play();
+         that.start();
+
+      }
+
+    });
+   
     
   };
 
@@ -52,11 +77,14 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
 
 
   Game.prototype.createWorld = function() {
+
+   
+  
   this.worldEl.css('transform', 'translate3d(0,0,0)');
   this.middleBackground.css('transform', 'translate3d(0,0,0)');
-  this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
- this.closeBackgroundX = -1500;
-  console.log(this.closeBackgroundEl);
+
+
+
     this.currentMaxPlatformHeight = -300;
     // Ground
     this.addPlatform(new Platform({
@@ -121,12 +149,7 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       id: this.currentId++
     }));
 
-    this.addEnemy(new Enemy({
-      x: 500,
-      y: 345,
-      direction: 1, 
-      id:this.currentId++
-    }));
+   
    
   };
 
@@ -174,18 +197,35 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
    */
 
   Game.prototype.onFrame = function() {
-    
+  
+
     if (!this.isPlaying) {
       return;
     }
 
+
     var now = +new Date() / 1000,
         delta = now - this.lastFrame;
     this.lastFrame = now;
- controls.onFrame(delta);
 
-    this.player.onFrame(delta);
+   
 
+
+    controls.onFrame(delta);
+
+    if(!this.intro.done){
+      this.intro.onFrame(delta);
+    }
+    else if(this.intro.done){ //TODO gera bara einusinni
+        this.gameContentEl.css({
+        left: 0,
+        top: 0
+      });
+     
+    
+     this.player.onFrame(delta);
+
+  
     for (var i = 0, e; e = this.entities[i]; i++) {
       e.onFrame(delta);
 
@@ -196,14 +236,14 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       if (e.dead) {
 
         this.entities.splice(i--, 1);
-        console.log(this.el.find("#"+e.id));
-        this.el.find("#"+e.id).remove();
+       // console.log(this.el.find("#"+e.id));
+        e.kill();
       }
       if(e.readyToFire){
         e.fire();
        this.addLaser(new Laser({
             pos: {x: e.pos.x+e.direction*-1*24, y: e.pos.y+27},
-            speed:90,
+            speed:190,
             direction:e.direction*-1,
             id:this.currentId++
 
@@ -256,13 +296,15 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
       top: -this.viewport.y/50
 
     })
- this.closeBackgroundEl.css({
-      left: this.closeBackgroundX+= 20*delta,
-      top: -this.viewport.y/20
-    })
+ 
     // Request next frame.
-    requestAnimFrame(this.onFrame);
+ 
+
+}
+   requestAnimFrame(this.onFrame);
+    
   };
+
 
   Game.prototype.updateViewport = function() {
     var minY = this.viewport.y + VIEWPORT_PADDING;
@@ -310,7 +352,8 @@ define(['controls','player', 'platform', 'enemy','laser'], function(controls, Pl
     this.createWorld();
     this.player.reset();
     this.viewport = {x: 0, y: 0, width: 800, height: 1200};
-
+    
+    console.log("start!");
     // Then start.
     this.unFreezeGame();
   };

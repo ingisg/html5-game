@@ -1,9 +1,13 @@
 @import "compass/css3";
 @import "_animations";
 
+ @font-face { font-family: starwars; src: url('../fonts/starwars.TTF'); } 
+ @font-face { font-family: starwarstext; src: url('../fonts/Franklin Gothic Demi.TTF'); } 
+
 body {
 background: black;
   font-size: 10px;
+
 }
 
 .game {
@@ -13,7 +17,7 @@ background: black;
 
   overflow: hidden;
   position: absolute;
-  background: url('../images/background.png') no-repeat;
+  //background: url('../images/background.png') no-repeat;
   background-size: 100%;
   
 }
@@ -24,13 +28,37 @@ background: black;
   height: 5000px;
 
 }
+.stars{
+width:2000px;
+height:2000px;
+position: absolute;
+  background: url('../images/stars.jpeg'); 
+  z-index:-2;
+}
 
+.alderaan{
+ position: absolute;
+left:-500px;
+width:300px;
+height:300px;
+
+  background: url('../images/alderaan1.png') no-repeat;
+}
+.starDestroyerTop{
+    position: absolute;
+   width: 500px;
+  height: 2000px;
+  left:0%;
+  top: -150%;
+  background: url('../images/star-destroyer-top.png') no-repeat;
+}
 .closeBackground{
+
    position: absolute;
    width: 3000px;
   height: 1200px;
-  left: 0;
-  top: 0;
+  left:-20%;
+  top: 100%;
   background: url('../images/star-destroyer.png') no-repeat;
 }
 .middleBackground{
@@ -78,7 +106,14 @@ background: black;
   background: url('../images/laser.png') 50% 50% / contain no-repeat;
 
 }
+.gameContent{
+  position:relative;
+  width:100%;
+  height:100%;
+  left:1000px;
+  top:1000px;
 
+}
 
 .gameoverscreen{
  font-size:40pt;
@@ -93,16 +128,91 @@ background: black;
 
 }
 
+.big{
+
+}
 .score{
+
+font-family: starwars;
   font-size:40pt;
-  color:white;
-  width:100px;
+  color:black;
+  text-shadow: -2px 0 yellow, 0 2px yellow, 2px 0 yellow, 0 -2px yellow;
+  
   height:50px;
   margin-top:100px;
   position: absolute;
   float:left;
 
 }
+.introText{
+  position: absolute;
+  width: 16em;
+  font-size: 200%;
+  font-weight: 400;
+  margin: 20% auto;
+  color: #4ee;
+
+
+
+}
+.scrollingTitle > p{
+  margin: 0;
+    padding: 0;
+}
+.scrollingTitle{
+text-align: center;
+
+
+top:40%;
+ left: -100%;
+ position: absolute;
+  font-family: starwars;
+  font-size:70pt;
+
+  text-shadow: -2px 0 yellow, 0 2px yellow, 2px 0 yellow, 0 -2px yellow;
+   height:50px;
+   width:250px;
+  position: absolute;
+  float:left;
+}
+
+.scrollingText{
+ font-family: starwarstext;
+
+position: absolute;
+  top: 100%;
+ 
+
+
+}
+.scrollingTextContainer{
+
+  color:yellow;
+  position: absolute;
+  width: 18em;
+  height: 50em;
+  bottom: 0;
+  left: 50%;
+  margin-left: -4em;
+  font-size: 200%;
+text-align: justify;
+
+  overflow: hidden;
+
+  @include transform-origin(70%, 0%);
+
+  -webkit-transform: perspective(300px) rotateX(30deg);
+  -moz-transform: perspective(300px) rotateX(30deg);
+  -ms-transform: perspective(300px) rotateX(30deg);
+  -o-transform: perspective(300px) rotateX(30deg);
+  transform: perspective(300px) rotateX(30deg);
+
+}
+.intro{
+
+
+}
+
 
 
 @import "_player";

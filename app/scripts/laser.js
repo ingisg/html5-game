@@ -35,7 +35,7 @@ define(function() {
     if(!this.deadly){
       this.nonDeadlyTimer+=delta;
       if(this.nonDeadlyTimer > DEADLYCOOLDOWN){
-        this.deadly= true;
+        //this.deadly= true;
       }
     }
 
@@ -45,6 +45,9 @@ define(function() {
     // Update UI
     this.el.css('transform', 'translate3d(' + this.pos.x + 'px, ' + this.pos.y + 'px,0)');
   };
+  Laser.prototype.kill = function(){
+    this.el.remove();
+  }
 
   return Laser;
 });

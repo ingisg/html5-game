@@ -19,6 +19,8 @@ define(function() {
   };
 
   Platform.prototype.onFrame = function() {};
-
+  Platform.prototype.kill = function(){
+    this.el.remove();
+  }
   return Platform;
 });
