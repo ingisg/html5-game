@@ -3,7 +3,9 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: 15px;
-  background: #A9A9A9;
-  @include border-radius(10px);
-}
+
+ 
+  background: url('../images/platform.png');
+   @include border-radius(10px);
+
+ }

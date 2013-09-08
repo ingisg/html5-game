@@ -51,7 +51,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
       onload:function(){
         console.log("test");
          this.ready = true;
-         that.sound.play();
+         //that.sound.play();
          that.start();
 
       }
@@ -90,8 +90,8 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.addPlatform(new Platform({
       x: 100,
       y: 418,
-      width: 800,
-      height: 10,
+      width: 35,
+      height: 5,
       id: this.currentId++
     }));
 
@@ -99,53 +99,54 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.addPlatform(new Platform({
       x: 300,
       y: 258,
-      width: 100,
-      height: 10,
+      width: 5,
+      height: 1,
       id: this.currentId++
     }));
     this.addPlatform(new Platform({
       x: 100,
       y: 288,
-      width: 100,
-      height: 10,
-      id: this.currentId++
+      width: 4,
+      height: 1,
+      id: this.currentId++,
+      moving: true
     }));
     this.addPlatform(new Platform({
       x: 400,
       y: 158,
-      width: 100,
-      height: 10,
+      width: 5,
+      height: 1,
       id: this.currentId++
     }));
     this.addPlatform(new Platform({
       x: 200,
       y: 188,
-      width: 100,
-      height: 10,
+      width: 5,
+      height: 1,
       id: this.currentId++
     }));
 
     this.addPlatform(new Platform({
       x: 170,
       y: -300,
-      width: 100,
-      height: 10,
+      width: 5,
+      height: 1,
       id: this.currentId++
     }));
 
     this.addPlatform(new Platform({
       x: 60,
       y: -200,
-      width: 100,
-      height: 10,
+      width: 5,
+      height: 1,
       id: this.currentId++
     }));
 
     this.addPlatform(new Platform({
       x: 152,
       y: 1,
-      width: 100,
-      height: 10,
+      width: 5,
+      height: 1,
       id: this.currentId++
     }));
 
@@ -264,15 +265,19 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.updateViewport();
     if(this.player.pos.y < this.currentMaxPlatformHeight+200){
       newX = (Math.random()*this.viewport.width+100)-150;
-      newY = this.currentMaxPlatformHeight-(Math.random()*100+42),
+      newY = this.currentMaxPlatformHeight-(Math.random()*100+42);
+      this.platformRandom = Math.random();
+
     this.addPlatform(new Platform({
       x: newX,
       y: newY,
-      width: 100,
-      height: 10,
+      width: Math.floor((Math.random()*5)+3),
+      height: 1,
+      moving: this.platformRandom > 0.7 && this.platformRandom < 0.9, 
       id:this.currentId++
     }));
-    if(Math.random() > 0.9){
+    
+    if(this.platformRandom > 0.9){
      direction = 1;
      if(newX < 400){
       direction = -1;
@@ -284,6 +289,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
       id:this.currentId++
     }));
    }
+    
     this.currentMaxPlatformHeight -= 100;
 
   }

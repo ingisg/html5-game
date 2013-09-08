@@ -90,12 +90,12 @@ define(['controls'], function(controls) {
     this.game.forEachPlatform(function(p) {
       // Are we crossing Y.
      
-      if (p.rect.y >= oldY && p.rect.y < that.pos.y) {
+      if (p.pos.y >= oldY && p.pos.y < that.pos.y) {
 
         // Are inside X bounds.
-        if (that.pos.x + PLAYER_HALF_WIDTH >= p.rect.x && that.pos.x - PLAYER_HALF_WIDTH <= p.rect.right) {
+        if (that.pos.x + PLAYER_HALF_WIDTH >= p.pos.x && that.pos.x - PLAYER_HALF_WIDTH <= p.rect.right) {
           // COLLISION. Let's stop gravity.
-          that.pos.y = p.rect.y;
+          that.pos.y = p.pos.y;
           that.vel.y = 0;
 
         }
