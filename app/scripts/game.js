@@ -51,7 +51,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
       onload:function(){
         console.log("test");
          this.ready = true;
-         //that.sound.play();
+         that.sound.play();
          that.start();
 
       }
