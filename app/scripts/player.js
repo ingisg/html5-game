@@ -94,7 +94,7 @@ define(['controls'], function(controls) {
       if (p.pos.y >= oldY && p.pos.y-10 < that.pos.y) {
 
         // Are inside X bounds.
-        if (that.pos.x + PLAYER_HALF_WIDTH >= p.pos.x && that.pos.x - PLAYER_HALF_WIDTH <= p.rect.right) {
+        if (that.pos.x + PLAYER_HALF_WIDTH >= p.pos.x && that.pos.x - PLAYER_HALF_WIDTH <= (p.pos.x+p.totalWidth)) {
           console.log("Collision!");
           // COLLISION. Let's stop gravity.
           that.pos.y = p.pos.y;
