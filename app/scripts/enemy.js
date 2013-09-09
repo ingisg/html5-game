@@ -29,6 +29,17 @@ define(function() {
   FloatingEnemy.prototype.fire = function(){
     this.readyToFire = false;
   }
+  FloatingEnemy.prototype.hit = function(){
+      if(!this.dying)
+      {
+        this.dying = true;
+        this.game.enemyScore += 100;
+
+        this.game.scoreGain();
+
+      }
+      
+  };
   FloatingEnemy.prototype.onFrame = function(delta) {
     this.laserCheck();
     this.fireTimer += delta;
@@ -40,10 +51,12 @@ define(function() {
     if(this.dying){
       this.pos.y+=150*delta;
   this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0)');
+  console.log('Enemy Dying 1');
 
     }
 
     if(this.dead){
+      
   //    this.el.remove();
     }
 
@@ -73,7 +86,8 @@ define(function() {
 
     if(!laser.deadly){
        if (distanceSq < minDistanceSq) {
-          that.dying = true;
+          that.hit();
+          //console.log('Enemy Dying 3');
 
       }
      

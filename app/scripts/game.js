@@ -36,6 +36,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.altitudeScore = 0;
     this.oldScore = -1;
     this.enemyScore = 0;
+    this.Score = 0;
     this.gameOverState = false;
 
     controls.on('touch', this.onTouch.bind(this));
@@ -63,6 +64,15 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
   
   Game.prototype.freezeGame = function() {
     this.isPlaying = false;
+  };
+
+  Game.prototype.scoreGain = function(){
+      this.Score = this.altitudeScore + this.enemyScore;
+
+      var text = document.createTextNode('Score: '+ this.Score);
+      
+
+      document.getElementById("score").innerHTML="Score "+ this.Score;
   };
 
   Game.prototype.unFreezeGame = function() {
@@ -321,12 +331,9 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     {
 
       this.oldScore = this.altitudeScore;
-      var text = document.createTextNode('Score: '+this.altitudeScore);
-      
 
-      document.getElementById("score").innerHTML="Score "+this.altitudeScore;
-
-      
+      this.scoreGain();
+          
     }
     var maxY = this.viewport.y + this.viewport.width - VIEWPORT_PADDING;
 
@@ -360,6 +367,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.createWorld();
     this.player.reset();
     this.viewport = {x: 0, y: 0, width: 800, height: 1200};
+    this.scoreGain();
     
     console.log("start!");
     // Then start.

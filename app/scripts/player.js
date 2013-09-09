@@ -121,7 +121,8 @@ define(['controls'], function(controls) {
            
             
             that.swing();
-            enemy.dying = true;
+            
+            enemy.hit();
           }
         }
     });
