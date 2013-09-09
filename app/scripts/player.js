@@ -70,6 +70,7 @@ define(['controls'], function(controls) {
     this.checkPlatforms(oldY);
     
     this.checkEnemies();
+    this.checkForceups();
     this.checkGameOver();
 
   
@@ -105,6 +106,23 @@ define(['controls'], function(controls) {
     });
   };
 
+  Player.prototype.checkForceups  = function(){
+     var centerX = this.pos.x;
+    var centerY = this.pos.y;
+    var that = this;
+     this.game.forEachForceup(function(forceup){
+      var distanceX = forceup.pos.x - centerX;
+      var distanceY = forceup.pos.y - centerY;
+
+      // Minimum distance squared
+      var distanceSq = distanceX * distanceX + distanceY * distanceY;
+      var minDistanceSq = (forceup.radius + PLAYER_RADIUS) * (forceup.radius + PLAYER_RADIUS);
+        if (distanceSq < minDistanceSq) {
+          forceup.kill();
+          that.vel.y = -2500;
+        }
+    });
+  }
   Player.prototype.checkEnemies = function() {
     var centerX = this.pos.x;
     var centerY = this.pos.y;
