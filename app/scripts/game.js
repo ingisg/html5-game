@@ -273,7 +273,8 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
       y: newY,
       width: Math.floor((Math.random()*5)+3),
       height: 1,
-      moving: this.platformRandom > 0.7 && this.platformRandom < 0.9, 
+      movingY: this.platformRandom > 0.7 && this.platformRandom < 0.8,
+      movingX: this.platformRandom > 0.8 && this.platformRandom < 0.9, 
       id:this.currentId++
     }));
     

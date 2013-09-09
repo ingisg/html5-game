@@ -6,7 +6,8 @@ define(function() {
 
   var Platform = function(rect) {
     this.rect = rect;
-    this.moving = rect.moving;
+    this.movingY = rect.movingY;
+    this.movingX = rect.movingX;
     //console.log(this.moving)
     this.totalWidth = this.rect.width * WIDTH;
     this.totalHeight = this.rect.height * HEIGHT;
@@ -29,7 +30,7 @@ define(function() {
 
   Platform.prototype.onFrame = function(delta) {
 
-    if(this.moving){
+    if(this.movingY){
 
     if(this.pos.y <= this.maxY) {
         this.movement = this.movement *(-1);
@@ -47,7 +48,26 @@ define(function() {
     });
 
     }
+    if(this.movingX){
+
+    if(this.pos.x <= 20) {
+        this.movement = this.movement *(-1);
+      }
+      else if(this.pos.x >= 750){
+         this.movement = this.movement *(-1);
+
+      }
+      this.pos.x += this.movement * delta; 
+  
+
+       this.el.css({
+     
+      left: this.pos.x
+    });
+
+    }
   };
+
   Platform.prototype.kill = function(){
     this.el.remove();
   }

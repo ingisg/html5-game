@@ -32,6 +32,7 @@ define(['controls'], function(controls) {
     this.swinging = true;
   }
   Player.prototype.onFrame = function(delta) {
+    
      // Player input
     this.vel.x = controls.inputVec.x * PLAYER_SPEED;
 
