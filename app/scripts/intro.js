@@ -1,6 +1,6 @@
 /*global define */
 
-define(['controls'],function(controls) {
+define(['controls','Hammer'],function(controls,hammer) {
   
   var Intro = function(el,gameContainer) {
     this.el = el;
@@ -32,11 +32,31 @@ define(['controls'],function(controls) {
      this.destroyerTopEl.css('transform', 'translate3d(0,0,0) ');
      this.starsEl.css('transform', 'translate3d(0,0,0) ');
      this.alderaanEl.css('transform translate3d(0,0,0)');
+     this._test = "";
+     this.scrollY = 0;
+     this.introDelta = 0;
+     this.oldScrollY = 0;
+     this.totalDelta = 0;
+     this.test = this.el.find("#test");
+      var element = document.getElementById('intro');
+      that = this;
+     this.hammertime = Hammer(element).on("dragup", function(event) {
+      console.log(event.gesture.deltaY);
+      that.scrollY+=event.gesture.distance;
+      event.gesture.preventDefault();
 
-       controls.on('touch', this.onTouch.bind(this));
-  // 
+
+    });
+      this.hammertime = Hammer(element).on("dragdown", function(event) {
+        event.gesture.preventDefault();
+      console.log(event.gesture.deltaY);
+      that.scrollY-=event.gesture.distance;
+
+
+    });
+    
   };
-
+ 
 Intro.prototype.onTouch = function(){
 
   this.done = true;
@@ -51,10 +71,18 @@ Intro.prototype.onTouch = function(){
     });
 }
   Intro.prototype.onFrame = function(delta) {
-    this.pos.y -=20*delta;
+
+
+
+    this.introDelta+= this.scrollY/100;
+     this.test.html(this.introDelta);
+    
+    this.scrollY = 0;
+    console.log(this.scrollY);
+    this.pos.y -=20*delta+this.introDelta;
     this.pos.x = 0;
-    this.timer += delta;
-    this.titleScale-=0.4*delta;
+    this.timer += delta+this.introDelta;
+    this.titleScale-=0.4*delta+this.introDelta;
 
     if(this.titleScale > 0){
 
@@ -66,7 +94,7 @@ Intro.prototype.onTouch = function(){
 
   
    if(this.pos.y < -500){
-      this.starDestroyerPos.y +=60*delta;
+      this.starDestroyerPos.y +=60*delta+this.introDelta;
       this.destroyerTopEl.css({
       top: this.starDestroyerPos.y
     });
@@ -97,7 +125,7 @@ Intro.prototype.onTouch = function(){
 
     }
     if(this.pos.y < -900){
-      this.starDestroyerPos.x+=60*delta;
+      this.starDestroyerPos.x+=60*delta+this.introDelta;
       this.destroyer.css({
         left: this.starDestroyerPos.x
       });
@@ -106,6 +134,7 @@ Intro.prototype.onTouch = function(){
 
     if(this.pos.y < -1300){
       this.done = true;
+      this.el.remove();
     }
 
     if(this.pos.y >-400)
@@ -113,14 +142,14 @@ Intro.prototype.onTouch = function(){
        this.scrollingText.css({top:this.pos.y})
     }
    if(this.pos.y > -500  && this.pos.y < -350){
-     this.stars.y -=40*delta;
+     this.stars.y -=40*delta+this.introDelta;
       this.starsEl.css({
       top: this.stars.y
     });
     }
 
 
-
+ this.introDelta = 0;
 
   /*  this.current = (this.current + delta) % this.duration;
 

@@ -19,7 +19,6 @@ define(function() {
     this.dying = false;
     this.id = options.id;
     this.direction = options.direction;
-    console.log(options.direction);
       this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX('+this.direction+')');
 
   };
