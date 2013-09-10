@@ -1,6 +1,6 @@
 /*global define */
 
-define(['controls'], function(controls) {
+define(['controls','soundmanager'], function(controls) {
 
   var PLAYER_SPEED = 400;
   var JUMP_VELOCITY = 1200 ;
