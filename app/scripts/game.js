@@ -265,12 +265,13 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
     var now = +new Date() / 1000,
         delta = now - this.lastFrame;
     this.lastFrame = now;
-
+    if(this.intro.done){
    
       this.closeBackgroundX+=60*delta;
       this.closeBackgroundEl.css({
         left: this.closeBackgroundX
       });
+    }
 
     controls.onFrame(delta);
 
@@ -365,8 +366,7 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
       id:this.currentId++
     },this,this.soundmanager));
    }
-    this.yPlatformChance-= 0.005;
-    this.xPlatformChance-= 0.005;
+
     this.currentMaxPlatformHeight -= 150;
 
   }
