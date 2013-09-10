@@ -1,6 +1,6 @@
 /*global define */
 
-define(['controls'], function(controls) {
+define(['controls','Howler'], function(controls,howler) {
 
   var PLAYER_SPEED = 400;
   var JUMP_VELOCITY = 1200 ;
@@ -22,6 +22,10 @@ define(['controls'], function(controls) {
     this.swingTimer = 0.2;
     this.direction = 1;
     this.shield = false;
+
+    this.swing1 = new howler.Howl({
+    urls: ['/sounds/swing1.mp3', '/sounds/swing1.ogg']  
+    });
   };
 
   Player.prototype.reset = function() {
@@ -29,10 +33,12 @@ define(['controls'], function(controls) {
     this.vel = { x: 0, y: 0 };
   }
   Player.prototype.swing = function(){
-    console.log("SWIING!");
+    
     this.hand.toggleClass("swing",false);
-    this.swinging = true;
+    this.swinging = true;    
+    this.swing1.play();      
   }
+  
   Player.prototype.onFrame = function(delta) {
     
      // Player input
