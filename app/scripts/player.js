@@ -1,6 +1,6 @@
 /*global define */
 
-define(['controls','Howler'], function(controls,howler) {
+define(['controls'], function(controls) {
 
   var PLAYER_SPEED = 400;
   var JUMP_VELOCITY = 1200 ;
@@ -12,8 +12,9 @@ define(['controls','Howler'], function(controls,howler) {
 
 
 
-  var Player = function(el, game) {
+  var Player = function(el, game, soundmanager) {
     this.game = game;
+    this.soundmanager = soundmanager;
     this.el = el;
     this.hand = el.find(".hand");
     this.shieldEl = el.find(".shieldContainer");
@@ -23,7 +24,7 @@ define(['controls','Howler'], function(controls,howler) {
     this.direction = 1;
     this.shield = false;
 
-    this.swing1 = new howler.Howl({
+    /*this.swing1 = new howler.Howl({
     urls: ['/sounds/swing1.mp3', '/sounds/swing1.ogg']  
     });
 
@@ -38,6 +39,16 @@ define(['controls','Howler'], function(controls,howler) {
       this.saberhit = new howler.Howl({
     urls: ['/sounds/saberhit.mp3', '/sounds/saberhit.ogg']  
     });
+
+        this.shieldhit = new howler.Howl({
+    urls: ['/sounds/shieldhit.mp3', '/sounds/shieldhit.ogg']  
+    });
+
+        this.deflectsound = new howler.Howl({
+    urls: ['/sounds/deflect.mp3', '/sounds/deflect.ogg']  
+    });*/
+
+  
   };
 
   Player.prototype.reset = function() {
@@ -48,7 +59,7 @@ define(['controls','Howler'], function(controls,howler) {
     
     this.hand.toggleClass("swing",false);
     this.swinging = true;    
-    this.swing1.play();      
+    this.soundmanager.swing1.play();      
   }
 
   Player.prototype.onFrame = function(delta) {
@@ -141,7 +152,7 @@ define(['controls','Howler'], function(controls,howler) {
         if (distanceSq < minDistanceSq) {
           forceup.dead = true;
           that.vel.y = -2500;
-          that.forcejumpsound.play();
+          that.soundmanager.forcejumpsound.play();
         }
     });
   }
@@ -160,7 +171,7 @@ define(['controls','Howler'], function(controls,howler) {
         if (distanceSq < minDistanceSq) {
           shieldup.dead =true;
           that.shield = true;
-          that.shieldgainsound.play();
+          that.soundmanager.shieldgainsound.play();
         }
     });
   }
@@ -180,7 +191,7 @@ define(['controls','Howler'], function(controls,howler) {
            
             
             that.swing();
-            that.saberhit.play();
+            that.soundmanager.saberhit.play();
             enemy.hit();
           }
         }
@@ -208,6 +219,7 @@ define(['controls','Howler'], function(controls,howler) {
               laser.deadly = false;
               console.log("SHIELD!");
               that.shield= false;
+              that.soundmanager.shieldhit.play();
             }
             else{
               console.log("DEEEEED!");
@@ -225,6 +237,7 @@ define(['controls','Howler'], function(controls,howler) {
            
              laser.deflect();
              that.swing();
+             that.soundmanager.deflectsound.play();
            
           }
         }

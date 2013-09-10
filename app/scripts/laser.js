@@ -1,6 +1,6 @@
 /*global define */
 
-define(['Howler'],function(howler) {
+define(function() {
   var LIFE = 10;
   var DEADLYCOOLDOWN = 1;
   var Laser = function(options) {

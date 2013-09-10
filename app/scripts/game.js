@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hammer','forceup','forceshield'], function(controls, Player, Platform, Enemy, Laser, Intro,howler,hammer,ForceUp,ForceShield) {
+define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hammer','forceup','forceshield','soundmanager'], function(controls, Player, Platform, Enemy, Laser, Intro,howler,hammer,ForceUp,ForceShield,SoundManager) {
 
   var VIEWPORT_PADDING = 200;
 
@@ -15,6 +15,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.player = new Player(this.el.find('.player'), this);
 
     this.intro = new Intro(this.el.find('.intro'),this.el.find('.gameContent'));
+    this.soundmanager = new SoundManager();
 
     this.entities = [];
     this.platformsEl = el.find('.platforms');
@@ -62,9 +63,13 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
 
     });
 
-      this.blaster1 = new howler.Howl({
+      /*this.blaster1 = new howler.Howl({
     urls: ['/sounds/blaster1.mp3', '/sounds/blaster1.ogg']  
     });
+
+        this.gameoversound = new howler.Howl({
+    urls: ['/sounds/vader.mp3', '/sounds/vader.ogg']  
+    });*/
    
     
   };
@@ -233,6 +238,7 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
         top: 200
         
       });   
+    this.soundmanager.gameoversound.play();
 
     document.getElementById("highscore").innerHTML="High Score "+ this.highScore;
 
@@ -294,8 +300,8 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
       }
       if(e.readyToFire){
         e.fire();
-        this.blaster1.volume(e.blasterVolume());
-        this.blaster1.play();
+        this.soundmanager.blaster1.volume(e.blasterVolume());
+        this.soundmanager.blaster1.play();
        this.addLaser(new Laser({
             pos: {x: e.pos.x+e.direction*-1*24, y: e.pos.y+27},
             speed:190,

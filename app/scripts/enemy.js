@@ -1,12 +1,13 @@
 /*global define */
 
-define(['Howler'],function(howler) {
+define(function() {
   var FIRERATE = 1;
-  var FloatingEnemy = function(options, game) {
+  var FloatingEnemy = function(options, game, soundmanager) {
     this.el = $('<div class="enemy" id="'+options.id+'"></div>');
 
     this.pos = {};
     this.game = game;
+    this.soundmanager = soundmanager;
     this.pos.x = options.x;
     this.pos.y = options.y;
     this.radius = 32;
@@ -20,6 +21,10 @@ define(['Howler'],function(howler) {
     this.id = options.id;
     this.direction = options.direction;
       this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX('+this.direction+')');
+
+     /*this.blasterhitsound = new howler.Howl({
+    urls: ['/sounds/blasterhit.mp3', '/sounds/blasterhit.ogg']  
+    });*/
        
 
   };
@@ -96,9 +101,11 @@ define(['Howler'],function(howler) {
     var distanceSq = distanceX * distanceX + distanceY * distanceY;
     var minDistanceSq = (laser.radius + that.radius) * (laser.radius + that.radius);
 
-    if(!laser.deadly){
+    if(!laser.deadly && !that.dying ){
        if (distanceSq < minDistanceSq) {
           that.hit();
+
+          that.soundmanager.blasterhitsound.play();
           //console.log('Enemy Dying 3');
 
       }
