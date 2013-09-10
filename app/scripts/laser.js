@@ -1,6 +1,6 @@
 /*global define */
 
-define(function() {
+define(['Howler'],function(howler) {
   var LIFE = 10;
   var DEADLYCOOLDOWN = 1;
   var Laser = function(options) {
@@ -17,12 +17,17 @@ define(function() {
     this.deadly = true;
     this.nonDeadlyTimer = 0;
 
+    this.deflectionsound = new howler.Howl({
+    urls: ['/sounds/deflect.mp3', '/sounds/deflect.ogg']  
+    });
+
   };
 
   
   Laser.prototype.deflect = function(){
     this.direction = this.direction*-1;
     this.deadly = false;
+    this.deflectionsound.play();
   }
 
   Laser.prototype.onFrame = function(delta) {

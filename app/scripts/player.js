@@ -25,6 +25,10 @@ define(['controls','Howler'], function(controls,howler) {
     this.swing1 = new howler.Howl({
     urls: ['/sounds/swing1.mp3', '/sounds/swing1.ogg']  
     });
+
+    this.forcejumpsound = new howler.Howl({
+    urls: ['/sounds/forcejump.mp3', '/sounds/forcejump.ogg']  
+    });
   };
 
   Player.prototype.reset = function() {
@@ -37,7 +41,7 @@ define(['controls','Howler'], function(controls,howler) {
     this.swinging = true;    
     this.swing1.play();      
   }
-  
+
   Player.prototype.onFrame = function(delta) {
     
      // Player input
@@ -128,6 +132,7 @@ define(['controls','Howler'], function(controls,howler) {
         if (distanceSq < minDistanceSq) {
           forceup.kill();
           that.vel.y = -2500;
+          that.forcejumpsound.play();
         }
     });
   }

@@ -1,6 +1,6 @@
 /*global define */
 
-define(function() {
+define(['Howler'],function(howler) {
   var FIRERATE = 1;
   var FloatingEnemy = function(options, game) {
     this.el = $('<div class="enemy" id="'+options.id+'"></div>');
@@ -20,14 +20,27 @@ define(function() {
     this.id = options.id;
     this.direction = options.direction;
       this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX('+this.direction+')');
+         this.blaster1 = new howler.Howl({
+    urls: ['/sounds/blaster1.mp3', '/sounds/blaster1.ogg']  
+    });
 
   };
+
+  FloatingEnemy.prototype.blasterVolume = function(){
+     var volumeDistance = Math.round(Math.abs(this.game.player.pos.y - this.pos.y));
+     console.log('volumeDistance: ' + volumeDistance);
+
+    return (0.8-(volumeDistance/1000));
+     
+  }
 
   FloatingEnemy.prototype.kill = function(){
     this.el.remove();
   }
   FloatingEnemy.prototype.fire = function(){
     this.readyToFire = false;
+    this.blaster1.volume(this.blasterVolume());
+    this.blaster1.play();
   }
   FloatingEnemy.prototype.hit = function(){
       if(!this.dying)
