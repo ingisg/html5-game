@@ -50,18 +50,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.ready = false;
 
     var that = this;
-    this.sound = new howler.Howl({
-      urls: ['/sounds/intro.mp3', '/sounds/intro.ogg'],
-      buffer:true,
-      onload:function(){
-        console.log("test");
-         this.ready = true;
-         that.sound.play();
-         that.start();
 
-      }
-
-    });
 
       /*this.blaster1 = new howler.Howl({
     urls: ['/sounds/blaster1.mp3', '/sounds/blaster1.ogg']  
