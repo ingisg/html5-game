@@ -12,11 +12,11 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
   var Game = function(el) {
     this.el = el;
    
-    this.player = new Player(this.el.find('.player'), this);
+   
 
     this.intro = new Intro(this.el.find('.intro'),this.el.find('.gameContent'));
     this.soundmanager = new SoundManager();
-
+ this.player = new Player(this.el.find('.player'), this,this.soundmanager);
     this.entities = [];
     this.platformsEl = el.find('.platforms');
     this.gameoverEl = el.find('.gameoverscreen')
@@ -361,7 +361,7 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
       y: newY-70,
       direction: direction, 
       id:this.currentId++
-    },this));
+    },this,this.soundmanager));
    }
     
     this.currentMaxPlatformHeight -= 150;

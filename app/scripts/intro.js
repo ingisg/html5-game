@@ -23,7 +23,7 @@ define(['controls','Hammer'],function(controls,hammer) {
     this.starDestroyerPos.x = -200;
     this.stars = {};
     this.stars.y = 0;
-    this.done = false;
+    this.done = true;
     this.sideview = false;
 
     this.title = this.el.find(".scrollingTitle")
