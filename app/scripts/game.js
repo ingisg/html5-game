@@ -29,7 +29,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.worldEl = el.find('.world');
     this.middleBackground = el.find('.middleBackground');
     this.closeBackgroundX = -1500;
-
+  this.maxPlaformSize = 3;
     this.isPlaying = false;
     this.currentMaxPlatformHeight = -300;
     this.currentId = 0;
@@ -333,12 +333,23 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
     this.addPlatform(new Platform({
       x: newX,
       y: newY,
-      width: Math.floor((Math.random()*5)+3),
+      width: Math.floor((Math.random()*5)+this.maxPlaformSize),
       height: 1,
       movingY: this.platformRandom > this.yPlatformChance && this.platformRandom < 0.8,
       movingX: this.platformRandom > this.xPlatformChance && this.platformRandom < 0.9, 
       id:this.currentId++
     }));
+    if(this.yPlatformChance > 0.4){
+        this.yPlatformChance += this.player.pos.y / 10000000;
+       this.xPlatformChance += this.player.pos.y / 10000000;
+    }
+    else if(this.maxPlaformSize ==3){
+      this.maxPlaformSize = 2;
+    }
+  
+
+
+    console.log("Platform "+this.yPlatformChance);
     if(this.platformRandom < 0.7 && this.platformRandom > 0.65){
         this.addForceup(new ForceUp({
       x: newX,
@@ -431,6 +442,8 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
     // Set the stage.
     this.createWorld();
     this.player.reset();
+    this.yPlatformChance = 0.7;
+    this.xPlatformChance = 0.8;
     this.viewport = {x: 0, y: 0, width: 800, height: 1200};
     this.Score = 0;
     this.scoreGain();
