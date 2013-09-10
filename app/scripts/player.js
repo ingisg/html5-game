@@ -20,6 +20,7 @@ define(['controls'], function(controls) {
     this.swinging = false;
     this.swingTimer = 0.2;
     this.direction = 1;
+    this.shield = false;
   };
 
   Player.prototype.reset = function() {
@@ -71,6 +72,7 @@ define(['controls'], function(controls) {
     
     this.checkEnemies();
     this.checkForceups();
+    this.checkShieldUps();
     this.checkGameOver();
 
   
@@ -123,6 +125,24 @@ define(['controls'], function(controls) {
         }
     });
   }
+
+  Player.prototype.checkShieldUps  = function(){
+     var centerX = this.pos.x;
+    var centerY = this.pos.y;
+    var that = this;
+     this.game.forEachForceshield(function(shieldup){
+      var distanceX = shieldup.pos.x - centerX;
+      var distanceY = shieldup.pos.y - centerY;
+
+      // Minimum distance squared
+      var distanceSq = distanceX * distanceX + distanceY * distanceY;
+      var minDistanceSq = (shieldup.radius + PLAYER_RADIUS) * (shieldup.radius + PLAYER_RADIUS);
+        if (distanceSq < minDistanceSq) {
+          shieldup.kill();
+          that.shield = true;
+        }
+    });
+  }
   Player.prototype.checkEnemies = function() {
     var centerX = this.pos.x;
     var centerY = this.pos.y;
@@ -161,7 +181,17 @@ define(['controls'], function(controls) {
           console.log(that.direction + laser.direction);
         if((that.direction + laser.direction) !== 0){
           if(laser.deadly){
-            that.game.gameOver();
+            laser.kill();
+            if(that.shield){
+              laser.deadly = false;
+              console.log("SHIELD!");
+              that.shield= false;
+            }
+            else{
+              console.log("DEEEEED!");
+               that.game.gameOver();
+            }
+           
           }
          
           
