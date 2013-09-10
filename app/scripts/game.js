@@ -1,6 +1,6 @@
 /*global define, $ */
 
-define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hammer'], function(controls, Player, Platform, Enemy, Laser, Intro,howler,hammer) {
+define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hammer','forceup','forceshield'], function(controls, Player, Platform, Enemy, Laser, Intro,howler,hammer,ForceUp,ForceShield) {
 
   var VIEWPORT_PADDING = 200;
 
@@ -98,7 +98,11 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
 
 
     this.currentMaxPlatformHeight = -300;
-    // Ground
+
+  
+
+   
+
     this.addPlatform(new Platform({
       x: 100,
       y: 418,
@@ -180,7 +184,14 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     }
   }
 
-  
+  Game.prototype.addForceshield = function(forceshield){
+    this.entities.push(forceshield);
+    this.entitiesEl.append(forceshield.el);
+  }
+  Game.prototype.addForceup = function(forceup){
+    this.entities.push(forceup);
+    this.entitiesEl.append(forceup.el);
+  }
   Game.prototype.addPlatform = function(platform) {
     this.entities.push(platform);
     this.platformsEl.append(platform.el);
@@ -310,7 +321,20 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
       movingX: this.platformRandom > 0.8 && this.platformRandom < 0.9, 
       id:this.currentId++
     }));
-    
+    if(this.platformRandom < 0.7 && this.platformRandom > 0.65){
+        this.addForceup(new ForceUp({
+      x: newX,
+      y: newY-28,
+    }));
+
+    }
+
+     if(this.platformRandom < 0.65 && this.platformRandom > 0.3){
+        this.addForceshield(new ForceShield({
+      x: newX,
+      y: newY-28,
+    }));
+      }
     if(this.platformRandom > 0.9){
      direction = 1;
      if(newX < 400){
@@ -423,6 +447,22 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
   Game.prototype.forEachLaser = function(handler) {
     for (var i = 0, e; e = this.entities[i]; i++) {
       if (e instanceof Laser) {
+        handler(e);
+      }
+    }
+  };
+
+  Game.prototype.forEachForceup = function(handler) {
+    for (var i = 0, e; e = this.entities[i]; i++) {
+      if (e instanceof ForceUp) {
+        handler(e);
+      }
+    }
+  };
+
+   Game.prototype.forEachForceshield = function(handler) {
+    for (var i = 0, e; e = this.entities[i]; i++) {
+      if (e instanceof ForceShield) {
         handler(e);
       }
     }

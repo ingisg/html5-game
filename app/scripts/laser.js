@@ -19,7 +19,7 @@ define(function() {
 
   };
 
-
+  
   Laser.prototype.deflect = function(){
     this.direction = this.direction*-1;
     this.deadly = false;
