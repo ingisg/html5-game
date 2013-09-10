@@ -308,8 +308,9 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
 
     this.updateViewport();
     if(this.player.pos.y < this.currentMaxPlatformHeight+400){
-      newX = (Math.random()*(this.viewport.width)+50)-150;
-      newY = this.currentMaxPlatformHeight-(Math.random()*100+42);
+      newX = (Math.random()*(this.viewport.width-200));
+      console.log(newX);
+      newY = this.currentMaxPlatformHeight-(Math.random()*100);
       this.platformRandom = Math.random();
 
     this.addPlatform(new Platform({
@@ -348,7 +349,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     },this));
    }
     
-    this.currentMaxPlatformHeight -= 100;
+    this.currentMaxPlatformHeight -= 150;
 
   }
      this.worldEl.css({
