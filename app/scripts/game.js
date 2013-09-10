@@ -41,6 +41,8 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.highScore = 0;
     this.Score = 0;
     this.gameOverState = false;
+    this.yPlatformChance = 0.8;
+    this.xPlatformChance = 0.7;
 
     controls.on('touch', this.onTouch.bind(this));
 
@@ -50,7 +52,18 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.ready = false;
 
     var that = this;
+    this.sound = new howler.Howl({
+      urls: ['/sounds/intro.mp3', '/sounds/intro.ogg'],
+      buffer:true,
+      onload:function(){
+        console.log("test");
+         this.ready = true;
+         that.sound.play();
+         that.start();
 
+      }
+
+    });
 
       /*this.blaster1 = new howler.Howl({
     urls: ['/sounds/blaster1.mp3', '/sounds/blaster1.ogg']  
@@ -312,7 +325,7 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
 
     this.updateViewport();
     if(this.player.pos.y < this.currentMaxPlatformHeight+400){
-      newX = (Math.random()*(this.viewport.width-200));
+      newX = (Math.random()*(this.viewport.width-100));
       console.log(newX);
       newY = this.currentMaxPlatformHeight-(Math.random()*100);
       this.platformRandom = Math.random();
@@ -322,8 +335,8 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
       y: newY,
       width: Math.floor((Math.random()*5)+3),
       height: 1,
-      movingY: this.platformRandom > 0.7 && this.platformRandom < 0.8,
-      movingX: this.platformRandom > 0.8 && this.platformRandom < 0.9, 
+      movingY: this.platformRandom > this.yPlatformChance && this.platformRandom < 0.8,
+      movingX: this.platformRandom > this.xPlatformChance && this.platformRandom < 0.9, 
       id:this.currentId++
     }));
     if(this.platformRandom < 0.7 && this.platformRandom > 0.65){
@@ -334,7 +347,7 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
 
     }
 
-     if(this.platformRandom < 0.65 && this.platformRandom > 0.3){
+     if(this.platformRandom < 0.65 && this.platformRandom > 0.6){
         this.addForceshield(new ForceShield({
       x: newX,
       y: newY-28,
@@ -352,7 +365,8 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
       id:this.currentId++
     },this,this.soundmanager));
    }
-    
+    this.yPlatformChance-= 0.005;
+    this.xPlatformChance-= 0.005;
     this.currentMaxPlatformHeight -= 150;
 
   }
