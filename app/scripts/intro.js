@@ -8,6 +8,7 @@ define(['controls','Hammer'],function(controls,hammer) {
     this.scrollingText =this.el.find(".scrollingText");
     this.destroyer = this.el.find(".closeBackground");
     this.destroyerTopEl = this.el.find(".starDestroyerTop");
+
     this.starsEl = this.el.find(".stars");
     this.alderaanEl = this.el.find(".alderaan");
     this.exit = this.el.find(".exit");
@@ -23,7 +24,7 @@ define(['controls','Hammer'],function(controls,hammer) {
     this.starDestroyerPos.x = -200;
     this.stars = {};
     this.stars.y = 0;
-    this.done = true;
+    this.done = false;
     this.sideview = false;
 
     this.title = this.el.find(".scrollingTitle")
@@ -108,31 +109,9 @@ Intro.prototype.onTouch = function(){
     });
     }
 
-    if(this.sideview){
-      this.sideview = false;
-      this.starDestroyerPos.y = 200;
-        this.destroyer.css({
 
-        top: this.starDestroyerPos.y
-      });
 
-        this.alderaanEl.css({
-        left:200,
-        top:450
-      });
-     this.starsEl.css('transform', 'scale3d(1.5,1.5,1)');
-     
-
-    }
     if(this.pos.y < -900){
-      this.starDestroyerPos.x+=60*delta+this.introDelta;
-      this.destroyer.css({
-        left: this.starDestroyerPos.x
-      });
-    }
-
-
-    if(this.pos.y < -1300){
       this.done = true;
       this.el.remove();
     }
