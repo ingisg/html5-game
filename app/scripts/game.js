@@ -52,7 +52,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     var that = this;
     this.sound = new howler.Howl({
       urls: ['/sounds/intro.mp3', '/sounds/intro.ogg'],
-
+      buffer:true,
       onload:function(){
         console.log("test");
          this.ready = true;

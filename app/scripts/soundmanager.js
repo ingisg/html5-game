@@ -8,7 +8,7 @@ define(['Howler'], function(howler) {
 
 
 
-
+		
 		this.swing1 = new howler.Howl({
     urls: ['/sounds/swing1.mp3', '/sounds/swing1.ogg']  
     });

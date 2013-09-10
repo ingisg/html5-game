@@ -24,7 +24,12 @@ define(['controls'], function(controls) {
     this.direction = 1;
     this.shield = false;
 
+
     /*this.swing1 = new howler.Howl({
+=======
+    this.swing1 = new howler.Howl({
+    buffer:true,
+>>>>>>> c42379f549da1cddafddb6e92fdf0d41b708487f
     urls: ['/sounds/swing1.mp3', '/sounds/swing1.ogg']  
     });
 
