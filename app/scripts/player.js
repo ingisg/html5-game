@@ -3,7 +3,7 @@
 define(['controls'], function(controls) {
 
   var PLAYER_SPEED = 400;
-  var JUMP_VELOCITY = 1200  ;
+  var JUMP_VELOCITY = 1200 ;
   var GRAVITY = 2000;
   var PLAYER_HALF_WIDTH = 14;
   var PLAYER_RADIUS = 40;
@@ -16,6 +16,7 @@ define(['controls'], function(controls) {
     this.game = game;
     this.el = el;
     this.hand = el.find(".hand");
+    this.shieldEl = el.find(".shieldContainer");
     console.log(this.hand);
     this.swinging = false;
     this.swingTimer = 0.2;
@@ -59,7 +60,7 @@ define(['controls'], function(controls) {
     }
 
     this.hand.toggleClass("swing",this.swinging);
-
+    this.shieldEl.toggleClass("forceshieldEffect",this.shield);
     this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX('+this.direction+')');
     // Jumping
     
@@ -120,7 +121,7 @@ define(['controls'], function(controls) {
       var distanceSq = distanceX * distanceX + distanceY * distanceY;
       var minDistanceSq = (forceup.radius + PLAYER_RADIUS) * (forceup.radius + PLAYER_RADIUS);
         if (distanceSq < minDistanceSq) {
-          forceup.kill();
+          forceup.dead = true;
           that.vel.y = -2500;
         }
     });
@@ -138,7 +139,7 @@ define(['controls'], function(controls) {
       var distanceSq = distanceX * distanceX + distanceY * distanceY;
       var minDistanceSq = (shieldup.radius + PLAYER_RADIUS) * (shieldup.radius + PLAYER_RADIUS);
         if (distanceSq < minDistanceSq) {
-          shieldup.kill();
+          shieldup.dead =true;
           that.shield = true;
         }
     });
@@ -182,7 +183,7 @@ define(['controls'], function(controls) {
           console.log(that.direction + laser.direction);
         if((that.direction + laser.direction) !== 0){
           if(laser.deadly){
-            laser.kill();
+            laser.dead = true;
             if(that.shield){
               laser.deadly = false;
               console.log("SHIELD!");

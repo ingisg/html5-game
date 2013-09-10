@@ -84,7 +84,6 @@ height:300px;
    position: absolute;
    height:28px;
    width:28px;
-  
    background: url('../images/forceup.png') no-repeat;
    background-size: 28px 28px;
 
@@ -99,6 +98,30 @@ height:300px;
    background-size: 28px 28px;
 
 }
+.forceshieldEffect{
+   opacity:0.5;
+   position: absolute;
+   height:100px;
+   width:80px;
+   left:-20px;
+   top:-20px;
+   background: url('../images/forcefieldeffect.png') no-repeat;
+   background-size: 80px 100px;
+  @include animation(fadeInOut 0.15s 0.15s linear infinite alternate);
+
+}
+
+
+
+@include keyframes(fadeInOut) {
+  from {
+    opacity:0.3;
+  }
+  to {
+    opacity:1;
+  }
+}
+
 .farBackground{
   position: absolute;
   background: url('../images/background.png') cover;
@@ -162,7 +185,7 @@ height:300px;
 
 }
 
-.big{
+.forcefield{
 
 }
 .score{
@@ -279,7 +302,14 @@ text-align: justify;
 
 }
 
-
+@include keyframes(swing) {
+  from {
+    @include transform(rotate(0));
+  }
+  to {
+    @include transform(rotate(60deg));
+  }
+}
 
 @import "_player";
 @import "_platform";
