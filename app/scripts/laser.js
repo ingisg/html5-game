@@ -17,9 +17,6 @@ define(['Howler'],function(howler) {
     this.deadly = true;
     this.nonDeadlyTimer = 0;
 
-    this.deflectionsound = new howler.Howl({
-    urls: ['/sounds/deflect.mp3', '/sounds/deflect.ogg']  
-    });
 
   };
 
@@ -27,7 +24,7 @@ define(['Howler'],function(howler) {
   Laser.prototype.deflect = function(){
     this.direction = this.direction*-1;
     this.deadly = false;
-    this.deflectionsound.play();
+   
   }
 
   Laser.prototype.onFrame = function(delta) {

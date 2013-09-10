@@ -51,6 +51,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     var that = this;
     this.sound = new howler.Howl({
       urls: ['/sounds/intro.mp3', '/sounds/intro.ogg'],
+
       onload:function(){
         console.log("test");
          this.ready = true;
@@ -98,7 +99,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
   
   this.worldEl.css('transform', 'translate3d(0,0,0)');
   this.middleBackground.css('transform', 'translate3d(0,0,0)');
-
+this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
 
 
     this.currentMaxPlatformHeight = -300;
@@ -252,14 +253,16 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     if (!this.isPlaying) {
       return;
     }
-
-
+   
     var now = +new Date() / 1000,
         delta = now - this.lastFrame;
     this.lastFrame = now;
 
    
-
+      this.closeBackgroundX+=60*delta;
+      this.closeBackgroundEl.css({
+        left: this.closeBackgroundX
+      });
 
     controls.onFrame(delta);
 
