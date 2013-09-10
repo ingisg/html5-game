@@ -60,6 +60,10 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
       }
 
     });
+
+      this.blaster1 = new howler.Howl({
+    urls: ['/sounds/blaster1.mp3', '/sounds/blaster1.ogg']  
+    });
    
     
   };
@@ -287,6 +291,8 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
       }
       if(e.readyToFire){
         e.fire();
+        this.blaster1.volume(e.blasterVolume());
+        this.blaster1.play();
        this.addLaser(new Laser({
             pos: {x: e.pos.x+e.direction*-1*24, y: e.pos.y+27},
             speed:190,

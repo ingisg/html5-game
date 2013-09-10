@@ -30,6 +30,14 @@ define(['controls','Howler'], function(controls,howler) {
     this.forcejumpsound = new howler.Howl({
     urls: ['/sounds/forcejump.mp3', '/sounds/forcejump.ogg']  
     });
+
+     this.shieldgainsound = new howler.Howl({
+    urls: ['/sounds/shieldgain.mp3', '/sounds/shieldgain.ogg']  
+    });
+
+      this.saberhit = new howler.Howl({
+    urls: ['/sounds/saberhit.mp3', '/sounds/saberhit.ogg']  
+    });
   };
 
   Player.prototype.reset = function() {
@@ -152,6 +160,7 @@ define(['controls','Howler'], function(controls,howler) {
         if (distanceSq < minDistanceSq) {
           shieldup.dead =true;
           that.shield = true;
+          that.shieldgainsound.play();
         }
     });
   }
@@ -171,7 +180,7 @@ define(['controls','Howler'], function(controls,howler) {
            
             
             that.swing();
-            
+            that.saberhit.play();
             enemy.hit();
           }
         }

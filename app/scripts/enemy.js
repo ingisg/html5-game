@@ -20,9 +20,7 @@ define(['Howler'],function(howler) {
     this.id = options.id;
     this.direction = options.direction;
       this.el.css('transform', 'translate3d(' + this.pos.x + 'px,' + this.pos.y + 'px,0) scaleX('+this.direction+')');
-         this.blaster1 = new howler.Howl({
-    urls: ['/sounds/blaster1.mp3', '/sounds/blaster1.ogg']  
-    });
+       
 
   };
 
@@ -39,8 +37,8 @@ define(['Howler'],function(howler) {
   }
   FloatingEnemy.prototype.fire = function(){
     this.readyToFire = false;
-    this.blaster1.volume(this.blasterVolume());
-    this.blaster1.play();
+    
+    
   }
   FloatingEnemy.prototype.hit = function(){
       if(!this.dying)
