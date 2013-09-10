@@ -117,9 +117,9 @@ height:300px;
   position: absolute;
   height: 75px;
   width: 65px;
-  left: 0;
-  top: 0;
-  background: url('../images/stormtrooper.png') 50% 50% / contain no-repeat;
+  
+  background: url('../images/stormtrooper.png') no-repeat;
+  background-size: 75px 65px
 }
 
 .dying{
