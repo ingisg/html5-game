@@ -24,6 +24,7 @@ define(['controls','Howler'], function(controls,howler) {
     this.shield = false;
 
     this.swing1 = new howler.Howl({
+    buffer:true,
     urls: ['/sounds/swing1.mp3', '/sounds/swing1.ogg']  
     });
 
