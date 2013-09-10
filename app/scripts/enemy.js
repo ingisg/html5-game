@@ -32,6 +32,7 @@ define(function() {
   FloatingEnemy.prototype.hit = function(){
       if(!this.dying)
       {
+        this.readyToFire = false;
         this.dying = true;
         this.game.enemyScore += 100;
 

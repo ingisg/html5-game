@@ -146,7 +146,7 @@ height:300px;
 .score{
 
 font-family: starwars;
-  font-size:40pt;
+  font-size:33pt;
   color:black;
   text-shadow: -2px 0 yellow, 0 2px yellow, 2px 0 yellow, 0 -2px yellow;
   
@@ -156,6 +156,38 @@ font-family: starwars;
   float:left;
 
 }
+
+
+#highscore{
+
+font-family: starwars;
+  font-size:40pt;
+  color:black;
+  text-shadow: -2px 0 yellow, 0 2px yellow, 2px 0 yellow, 0 -2px yellow;
+  
+  //height:50px;
+  margin-top: 50%;
+  margin-left: 20%;
+  position: absolute;
+  
+  //padding-bottom: 100px;
+ 
+
+}
+
+#gameover{
+
+font-family: starwars;
+  font-size:40pt;
+  color:black;
+  text-shadow: -2px 0 yellow, 0 2px yellow, 2px 0 yellow, 0 -2px yellow;
+   position: absolute;
+  
+  margin-top: 20%;
+  margin-left: 20%;
+
+}
+
 .introText{
   position: absolute;
   width: 16em;

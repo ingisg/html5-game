@@ -24,6 +24,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.closeBackgroundEl = el.find('.closeBackground');
     this.entitiesEl = el.find('.entities');
     this.scoreEl = el.find('.score');
+    this.highscoreEl = el.find('.highscore');
     this.worldEl = el.find('.world');
     this.middleBackground = el.find('.middleBackground');
     this.closeBackgroundX = -1500;
@@ -36,6 +37,7 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.altitudeScore = 0;
     this.oldScore = -1;
     this.enemyScore = 0;
+    this.highScore = 0;
     this.Score = 0;
     this.gameOverState = false;
 
@@ -196,8 +198,29 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
 
   Game.prototype.gameOver = function() {
     console.log("over");
-    this.gameoverEl.css('display','block');
     this.freezeGame();
+    this.scoreGain();
+    console.log(this.Score + '   ' + this.highScore);
+    this.altitudeScore = 0;
+    this.enemyScore = 0;
+    this.oldScore = -1;
+    if(this.Score > this.highScore)
+    {
+      console.log(this.Score + '   ' + this.highScore);
+      this.highScore = this.Score;
+      console.log(this.Score + '   ' + this.highScore);
+    }
+
+    this.gameoverEl.css('display','block');  
+    this.scoreEl.css({
+        left: 200,
+        top: 200
+        
+      });   
+
+    document.getElementById("highscore").innerHTML="High Score "+ this.highScore;
+
+    
     this.gameOverState = true;
 
   
@@ -367,7 +390,14 @@ define(['controls','player', 'platform', 'enemy','laser','intro','Howler','Hamme
     this.createWorld();
     this.player.reset();
     this.viewport = {x: 0, y: 0, width: 800, height: 1200};
+    this.Score = 0;
     this.scoreGain();
+    this.scoreEl.css({
+        left: 0,
+        top: 0
+        
+      });   
+    
     
     console.log("start!");
     // Then start.
