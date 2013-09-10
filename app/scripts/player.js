@@ -25,33 +25,6 @@ define(['controls','soundmanager'], function(controls) {
     this.shield = false;
 
 
-    /*this.swing1 = new howler.Howl({
-=======
-    this.swing1 = new howler.Howl({
-    buffer:true,
->>>>>>> c42379f549da1cddafddb6e92fdf0d41b708487f
-    urls: ['/sounds/swing1.mp3', '/sounds/swing1.ogg']  
-    });
-
-    this.forcejumpsound = new howler.Howl({
-    urls: ['/sounds/forcejump.mp3', '/sounds/forcejump.ogg']  
-    });
-
-     this.shieldgainsound = new howler.Howl({
-    urls: ['/sounds/shieldgain.mp3', '/sounds/shieldgain.ogg']  
-    });
-
-      this.saberhit = new howler.Howl({
-    urls: ['/sounds/saberhit.mp3', '/sounds/saberhit.ogg']  
-    });
-
-        this.shieldhit = new howler.Howl({
-    urls: ['/sounds/shieldhit.mp3', '/sounds/shieldhit.ogg']  
-    });
-
-        this.deflectsound = new howler.Howl({
-    urls: ['/sounds/deflect.mp3', '/sounds/deflect.ogg']  
-    });*/
 
   
   };
@@ -134,6 +107,8 @@ define(['controls','soundmanager'], function(controls) {
         // Are inside X bounds.
         if (that.pos.x + PLAYER_HALF_WIDTH >= p.pos.x && that.pos.x - PLAYER_HALF_WIDTH <= (p.pos.x+p.totalWidth)) {
           console.log("Collision!");
+          that.soundmanager.jumpsound.volume(0.3);
+          that.soundmanager.jumpsound.play();
           // COLLISION. Let's stop gravity.
           that.pos.y = p.pos.y;
           that.vel.y = 0;

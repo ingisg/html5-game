@@ -8,7 +8,7 @@ define(['Howler'], function(howler) {
 
 
 
-		
+
 		this.swing1 = new howler.Howl({
     urls: ['/sounds/swing1.mp3', '/sounds/swing1.ogg']  
     });
@@ -42,6 +42,12 @@ define(['Howler'], function(howler) {
 
           this.blasterhitsound = new howler.Howl({
     urls: ['/sounds/blasterhit.mp3', '/sounds/blasterhit.ogg']  
+    });
+
+          this.jumpsound = new howler.Howl({
+    urls: ['/sounds/jump.mp3', '/sounds/jump.ogg']
+
+
     });
 
 

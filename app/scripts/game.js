@@ -227,6 +227,7 @@ this.closeBackgroundEl.css('transform', 'translate3d(0,0,0)');
     this.altitudeScore = 0;
     this.enemyScore = 0;
     this.oldScore = -1;
+    this.player.shield = false;
     if(this.Score > this.highScore)
     {
       console.log(this.Score + '   ' + this.highScore);
